@@ -6,7 +6,7 @@
 /* Revision: Revision 1.0 */
 /* */
 
-#include "Criteria.h"
+#include "Criteria.hh"
 
 /* This function overloads the << operator for Criteria and it's subclasses */
 ostream& operator<<(ostream& os, const Criteria& criteria){ 
@@ -15,50 +15,84 @@ ostream& operator<<(ostream& os, const Criteria& criteria){
   return os;
 }
 
-/* Constructor for the A_Criteria object which initializes all the member variables */
-A_Criteria::A_Criteria(const string &artist): artist(artist) 
+
+Title_Criteria::Title_Criteria(const string &title): title(title) 
 {
 }
 
-/* Constructor for the C_Criteria object which initializes all the member variables */
-C_Criteria::C_Criteria(const string &category): category(category) 
+
+Author_Criteria::Author_Criteria(const string &author): author(author) 
 {
 }
 
-/* Constructor for the AorC_Criteria object which initializes all the member variables */
-AorC_Criteria::AorC_Criteria(const string &artist, const string &category): A_Criteria(artist), C_Criteria(category)
+Genre_Criteria::Genre_Criteria(const string &genre): genre(genre) 
 {
 }
 
-/* Function that checks whether a song's artist matches a artist, returns true if it does, return false if it doesn't */
-bool A_Criteria::matches(const Song &song) const {
-  return song.getArtist().compare(this->artist) == 0;
+Subgenre_Criteria::Subgenre_Criteria(const string &subgenre): subgenre(subgenre) 
+{
 }
 
-/* Function that checks whether a song's category matches a category, returns true if it does, return false if it doesn't */
-bool C_Criteria::matches(const Song &song) const {
-  return song.getCategory().compare(this->category) == 0;
+Publisher_Criteria::Publisher_Criteria(const string &publisher): publisher(publisher) 
+{
 }
 
-/* Function that checks whether a song's category matches a category or a song's artist matches an artist, returns true if it does, return false if it doesn't */
-bool AorC_Criteria::matches(const Song &song) const {
-  return A_Criteria::matches(song) || C_Criteria::matches(song);
+Page_Criteria::Page_Criteria(const int pageCount): pageCount(pageCount) 
+{
 }
 
-/* This function overrides the print function in the Criteria class and tells the user how the A_Criteria will match a Song */
-void A_Criteria::print(ostream &os) const {
-  os << "To match the A_Criteria, the user must have the same artist as: " << this->artist << endl;
+bool Title_Criteria::matches(const Book &book) const {
+  return book.getTitle().compare(title) == 0;
 }
 
-/* This function overrides the print function in the Criteria class and tells the user how the C_Criteria will match a Song */
-void C_Criteria::print(ostream &os) const {
-  os << "To match the C_Criteria, the user must have the same category as: " << this->category << endl;
+bool Author_Criteria::matches(const Book &book) const {
+  return book.getAuthor().compare(author) == 0;
 }
 
-/* This function overrides the print function in the Criteria class and tells the user how the AorC_Criteria will match a Song */
-void AorC_Criteria::print(ostream &os) const {
-  os << "To match the AorC_Criteria, the user must match the A_Crtieria or the C_Criteria, which is the following: " << endl;
+bool Genre_Criteria::matches(const Book &book) const {
+  return book.getGenre().compare(genre) == 0;
+}
 
-  A_Criteria::print(os);
-  C_Criteria::print(os);
+bool Subgenre_Criteria::matches(const Book &book) const {
+  return book.getSubgenre().compare(subgenre) == 0;
+}
+
+bool Publisher_Criteria::matches(const Book &book) const {
+  return book.getPublisher().compare(publisher) == 0;
+}
+
+bool Page_Criteria::matches(const Book &book) const {
+  return book.getPageCount() == pageCount;
+}
+
+bool Page_Criteria::lessThan(const Book &book) const {
+  return book.getPageCount() < pageCount;
+}
+
+bool Page_Criteria::moreThan(const Book &book) const {
+  return book.getPageCount() > pageCount;
+}
+
+void Title_Criteria::print(ostream &os) const {
+  os << "To match the title criteria, the book must have the same title as: " << this->title << endl;
+}
+
+void Author_Criteria::print(ostream &os) const {
+  os << "To match the author criteria, the book must have the same author as: " << this->author << endl;
+}
+
+void Genre_Criteria::print(ostream &os) const {
+  os << "To match the genre criteria, the book must have the same genre as: " << this->genre << endl;
+}
+
+void Subgenre_Criteria::print(ostream &os) const {
+  os << "To match the subgenre criteria, the book must have the same subgenre as: " << this->subgenre << endl;
+}
+
+void Publisher_Criteria::print(ostream &os) const {
+  os << "To match the publisher criteria, the book must have the same publisher as: " << this->publisher << endl;
+}
+
+void Page_Criteria::print(ostream &os) const {
+  os << "To match the page criteria, the book must have the same number of pages as: " << this->pageCount << endl;
 }

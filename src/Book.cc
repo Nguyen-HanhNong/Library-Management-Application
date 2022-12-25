@@ -6,7 +6,7 @@
 /* Revision: Revision 1.0 */
 /* */
 
-#include "Book.h"
+#include "Book.hh"
 
 Book::Book(const string& title, const string& author, const string& genre, const string& subgenre, const string& publisher, int pageCount): title(title), author(author), genre(genre), subgenre(subgenre), publisher(publisher), pageCount(pageCount)
 {

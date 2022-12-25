@@ -6,8 +6,8 @@
 /* Revision: Revision 1.0 */
 /* */
 
-#ifndef BOOK_H
-#define BOOK_H
+#ifndef BOOK_HPP
+#define BOOK_HPP
 
 /* Necessary libraries and imports */
 #include <iostream>

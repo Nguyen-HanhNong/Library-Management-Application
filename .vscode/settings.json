@@ -3,6 +3,9 @@
     "*.ejs": "html",
     "*.java": "java",
     "string": "cpp",
-    "iosfwd": "cpp"
+    "iosfwd": "cpp",
+    "system_error": "cpp",
+    "ostream": "cpp",
+    "iostream": "cpp"
   }
 }
