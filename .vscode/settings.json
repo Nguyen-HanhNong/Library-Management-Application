@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "*.ejs": "html",
+    "*.java": "java",
+    "string": "cpp",
+    "iosfwd": "cpp"
+  }
+}
