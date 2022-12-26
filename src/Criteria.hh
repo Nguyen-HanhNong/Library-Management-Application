@@ -13,15 +13,12 @@
 
 using namespace std;
 
-class Criteria {
-		
+class Criteria {	
 	public:
     friend ostream& operator<<(ostream&, const Criteria&);
 
     /* These two functions are pure virutal functions */
     virtual bool matches(const Book &) const = 0;
-    virtual bool lessThan(const Book &) const = 0;
-    virtual bool moreThan(const Book &) const = 0;
     virtual void print(ostream& os) const = 0;
 };
 

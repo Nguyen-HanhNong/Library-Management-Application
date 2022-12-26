@@ -15,11 +15,9 @@ ostream& operator<<(ostream& os, const Criteria& criteria){
   return os;
 }
 
-
 Title_Criteria::Title_Criteria(const string &title): title(title) 
 {
 }
-
 
 Author_Criteria::Author_Criteria(const string &author): author(author) 
 {

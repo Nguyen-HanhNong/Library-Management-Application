@@ -3,7 +3,7 @@ objects = Criteria.o Book.o main.o TestBook.o Tester.o
 all: LibraryManagementApplication
 
 LibraryManagementApplication: $(objects)
-	g++ -o LibraryManagementApplication $(objects)
+	g++ -Wall -o LibraryManagementApplication $(objects)
 
 main.o: main.cc 
 	g++ -c main.cc

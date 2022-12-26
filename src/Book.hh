@@ -16,15 +16,18 @@
 
 using namespace std;
 
+#define NUM_BOOK_PROPERTIES 6
+
 class Book {
 		
 	public:
 		//overloaded operators
 		friend ostream& operator<<(ostream&, const Book&);
-		friend bool operator==(const Book&, const Book&);
+		bool operator==(const Book&) const;
+		void operator=(const Book&);
 
 		//constructors
-		Book(const string& title = "Default Title", const string& author = "Default Author", const string& genre = "Default Genre", const string& subgenre = "Default Subgenre", const string& publisher = "Default Publisher", int pageCount = 0);
+		Book(const string& title = "Unknown Title", const string& author = "Unknown Author", const string& genre = "Unknown Genre", const string& subgenre = "Unknown Subgenre", const string& publisher = "Unknown Publisher", int pageCount = 0);
 		Book(const Book &copyBook);
 
 		//getters
@@ -37,6 +40,9 @@ class Book {
 
 		//print formatting
 		void print(ostream &os) const;
+
+		//matching function
+		bool matches(const Book &book) const;
 
 	private:
 		string title;		//title of the book

@@ -49,11 +49,28 @@ void Book::print(ostream &os) const {
   os << "This book is named " << this->title << " and is written by " << this->author << ".\n The genre and subgenre of the book is the following " << this->genre << ", " << this->subgenre << ". \n This book is published by " << this->publisher << " and has " << this->pageCount << " pages. " << endl;
 }
 
+bool Book::matches(const Book &book) const {
+  if(this->author.compare(book.author) != 0 || this->title.compare(book.title) != 0 || this->genre.compare(book.genre) != 0 || this->subgenre.compare(book.subgenre) != 0 || this->publisher.compare(book.publisher) != 0 || this->pageCount != book.pageCount) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 ostream& operator<<(ostream& os, const Book& book) {
   book.print(os);
   return os;
 }
 
-bool operator==(const Book& firstBook, const Book& secondBook) {
-  return firstBook.title == secondBook.title && firstBook.author == secondBook.author && firstBook.genre == secondBook.genre && firstBook.subgenre == secondBook.subgenre && firstBook.publisher == secondBook.publisher && firstBook.pageCount == secondBook.pageCount;
+bool Book::operator==(const Book& secondBook) const {
+  return this->matches(secondBook);
+}
+
+void Book::operator=(const Book& book) {
+  this->title = book.title;
+  this->author = book.author;
+  this->genre = book.genre;
+  this->subgenre = book.subgenre;
+  this->publisher = book.publisher;
+  this->pageCount = book.pageCount;
 }
