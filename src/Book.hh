@@ -25,9 +25,10 @@ class Book {
 		friend ostream& operator<<(ostream&, const Book&);
 		bool operator==(const Book&) const;
 		void operator=(const Book&);
+		bool operator!=(const Book&) const;
 
 		//constructors
-		Book(const string& title = "Unknown Title", const string& author = "Unknown Author", const string& genre = "Unknown Genre", const string& subgenre = "Unknown Subgenre", const string& publisher = "Unknown Publisher", int pageCount = 0);
+		Book(const string& title = "Unknown Title", const string& author = "Unknown Author", const string& genre = "Unknown Genre", const string& subgenre = "Unknown Subgenre", const string& publisher = "Unknown Publisher", int pageCount = 0, const int ID = 0);
 		Book(const Book &copyBook);
 
 		//getters
@@ -37,6 +38,15 @@ class Book {
 		const string& getSubgenre() const;
 		const string& getPublisher() const;
 		const int getPageCount() const;
+
+		//comparison functions
+		static bool compareOrderAdded(const Book *book1, const Book *book2);
+		static bool compareTitle(const Book *book1, const Book *book2);
+		static bool compareAuthor(const Book *book1, const Book *book2);
+		static bool compareGenre(const Book *book1, const Book *book2);
+		static bool compareSubgenre(const Book *book1, const Book *book2);
+		static bool comparePublisher(const Book *book1, const Book *book2);
+		static bool comparePageCount(const Book *book1, const Book *book2);
 
 		//print formatting
 		void print(ostream &os) const;
@@ -51,5 +61,6 @@ class Book {
 		string subgenre; //subgenre of the book
 		string publisher; // publisher of the book
 		int pageCount; //number of pages in book
+		int ID; //unique ID of book
 };
 #endif
