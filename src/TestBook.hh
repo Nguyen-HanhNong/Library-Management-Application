@@ -35,6 +35,8 @@ class TestBook {
 		void testPublisherCriteria() const;
 		void testPageCountCriteria() const;
 
+		const int getRandomizedIndex() const;
+
 		vector<Book*> bookVector;
 
 };

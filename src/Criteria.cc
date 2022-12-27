@@ -39,6 +39,28 @@ Page_Criteria::Page_Criteria(const int pageCount): pageCount(pageCount)
 {
 }
 
+Criteria::~Criteria() 
+{
+}
+Title_Criteria::~Title_Criteria() 
+{
+}
+Author_Criteria::~Author_Criteria() 
+{
+}
+Genre_Criteria::~Genre_Criteria() 
+{
+}
+Subgenre_Criteria::~Subgenre_Criteria() 
+{
+}
+Publisher_Criteria::~Publisher_Criteria() 
+{
+}
+Page_Criteria::~Page_Criteria() 
+{
+}
+
 bool Title_Criteria::matches(const Book &book) const {
   return book.getTitle().compare(title) == 0;
 }

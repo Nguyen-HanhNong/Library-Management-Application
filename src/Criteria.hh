@@ -17,6 +17,8 @@ class Criteria {
 	public:
     friend ostream& operator<<(ostream&, const Criteria&);
 
+    virtual ~Criteria() = 0;
+
     /* These two functions are pure virutal functions */
     virtual bool matches(const Book &) const = 0;
     virtual void print(ostream& os) const = 0;
@@ -25,7 +27,8 @@ class Criteria {
 class Title_Criteria: public virtual Criteria {
 		
 	public:
-    Title_Criteria(const string &title);
+    Title_Criteria(const string &title = "");
+    ~Title_Criteria();
 
     virtual bool matches(const Book &) const;
     virtual void print(ostream &os) const;
@@ -38,7 +41,8 @@ class Title_Criteria: public virtual Criteria {
 class Author_Criteria: public virtual Criteria {
 		
 	public:
-    Author_Criteria(const string &author);
+    Author_Criteria(const string &author = "");
+    ~Author_Criteria();
 
     virtual bool matches(const Book &) const;
     virtual void print(ostream &os) const;
@@ -50,7 +54,8 @@ class Author_Criteria: public virtual Criteria {
 class Genre_Criteria: public virtual Criteria {
 		
 	public:
-    Genre_Criteria(const string &genre);
+    Genre_Criteria(const string &genre = "");
+    ~Genre_Criteria();
 
     virtual bool matches(const Book &) const;
     virtual void print(ostream &os) const;
@@ -62,7 +67,8 @@ class Genre_Criteria: public virtual Criteria {
 class Subgenre_Criteria: public virtual Criteria {
 		
 	public:
-    Subgenre_Criteria(const string &subgenre);
+    Subgenre_Criteria(const string &subgenre = "");
+    ~Subgenre_Criteria();
 
     virtual bool matches(const Book &) const;
     virtual void print(ostream &os) const;
@@ -74,7 +80,8 @@ class Subgenre_Criteria: public virtual Criteria {
 class Publisher_Criteria: public virtual Criteria {
 		
 	public:
-    Publisher_Criteria(const string &publisher);
+    Publisher_Criteria(const string &publisher = "");
+    ~Publisher_Criteria();
 
     virtual bool matches(const Book &) const;
     virtual void print(ostream &os) const;
@@ -86,7 +93,8 @@ class Publisher_Criteria: public virtual Criteria {
 class Page_Criteria: public virtual Criteria {
 		
 	public:
-    Page_Criteria(const int pageCount);
+    Page_Criteria(const int pageCount = 0);
+    ~Page_Criteria();
 
     virtual bool matches(const Book &) const;
     virtual bool lessThan(const Book &) const;
