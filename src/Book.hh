@@ -38,6 +38,7 @@ class Book {
 		const string& getSubgenre() const;
 		const string& getPublisher() const;
 		const int getPageCount() const;
+		const int getID() const;
 
 		//comparison functions
 		static bool compareOrderAdded(const Book *book1, const Book *book2);

@@ -1,16 +1,22 @@
-objects = Criteria.o Book.o Address.o Library.o main.o TestBook.o Tester.o
+main_classes = Criteria.o Book.o Address.o Library.o 
+tester_classes = TestBook.o TestLibrary.o Tester.o
+main_file = main.o 
+
 flags = -Wall -o
 
 all: LibraryManagementApplication
 
-LibraryManagementApplication: $(objects)
-	g++ $(flags) LibraryManagementApplication $(objects)
+LibraryManagementApplication: $(main_classes) $(tester_classes) $(main_file)
+	g++ $(flags) LibraryManagementApplication $(main_classes) $(tester_classes) $(main_file)
 
 main.o: main.cc 
 	g++ -c main.cc
 
 Tester.o: Tester.cc Tester.hh
 	g++ -c Tester.cc
+
+TestLibrary.o: TestLibrary.cc TestLibrary.hh
+	g++ -c TestLibrary.cc
 
 TestBook.o: TestBook.cc TestBook.hh
 	g++ -c TestBook.cc

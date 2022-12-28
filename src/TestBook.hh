@@ -27,7 +27,9 @@ class TestBook {
 		void printAllBooks() const;
 		void compareBooks() const;
 
+		/* Test all criteria for the books */
 		void testAllCriteria() const;
+		
 		void testTitleCriteria() const;
 		void testAuthorCriteria() const;
 		void testGenreCriteria() const;

@@ -21,20 +21,16 @@ class TestLibrary {
 	private:
 		void initLibraryFromFile(Library& library);
 
-		void printAllBooks() const;
-		void compareBooks() const;
+		/* Testing getter functions in Library class */
+		void testGetterFunctions();
+		
+		void testGetBooks();
+		void testGetNextBookID();
+		void testGetName();
+		void testGetAddress();
 
-		void testAllCriteria() const;
-		void testTitleCriteria() const;
-		void testAuthorCriteria() const;
-		void testGenreCriteria() const;
-		void testSubgenreCriteria() const;
-		void testPublisherCriteria() const;
-		void testPageCountCriteria() const;
+		void testMatchingBooks();
 
-		const int getRandomizedIndex() const;
-
-		vector<Book*> bookVector;
-    Library library;
+		Library library;
 };
 #endif

@@ -24,11 +24,11 @@ void TestBook::initFromFile() {
   int pageCount;
 
   #ifdef _WIN32
-    fileLocation = "..\books\test_books.csv";
+    fileLocation = "..\books\tester\test_books.csv";
   #elif __linux__
-    fileLocation = "../books/test_books.csv";
+    fileLocation = "../books/tester/test_books.csv";
   #elif __unix__
-    fileLocation = "../books/test_books.csv";
+    fileLocation = "../books/tester/test_books.csv";
   #else
     cout << "Unidentified OS. This program does not currently handle this OS. The program will now exit";
     exit(EXIT_FAILURE);
@@ -117,7 +117,7 @@ void TestBook::testAllCriteria() const {
     testPageCountCriteria();
   }
 
-  cout << "Successfully passed all criteria tests!" << endl;
+  cout << "Successfully passed all criteria tests!" << endl << endl;
 }
 
 const int TestBook::getRandomizedIndex() const {

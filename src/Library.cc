@@ -1,8 +1,6 @@
 #include "Library.hh"
 
-static int nextBookID = 0;
-
-Library::Library(const string& name, const Address& address): address(address), name(name), bookVector(bookVector)
+Library::Library(const string& name, const Address& address): address(address), name(name), bookVector(vector<Book*>()), nextBookID(0)
 {
 }
 
@@ -28,8 +26,8 @@ const string& Library::getName() const {
   return this->name;
 }
 
-int Library::getNextBookID() const {
-  return nextBookID;
+const int Library::getNextBookID() const {
+  return this->nextBookID;
 }
 
 const Address& Library::getAddress() const {
@@ -144,6 +142,15 @@ bool Library::removeBooksBySeveralCriteria(const vector<Criteria> &criteriaVecto
   }
 
   return removed;
+}
+
+void Library::emptyLibrary() {
+  for(int i = 0; i < bookVector.size(); i++) {
+    delete bookVector[i];
+  }
+
+  bookVector.clear();
+  nextBookID = 0;
 }
 
 void Library::defaultPrint(ostream &os) const {

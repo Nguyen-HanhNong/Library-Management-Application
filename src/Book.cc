@@ -40,12 +40,16 @@ const int Book::getPageCount() const {
   return this->pageCount;
 }
 
+const int Book::getID() const {
+  return this->ID;
+}
+
 void Book::print(ostream &os) const {
   os << "This book is named " << this->title << " and is written by " << this->author << ".\n The genre and subgenre of the book is the following " << this->genre << ", " << this->subgenre << ". \n This book is published by " << this->publisher << " and has " << this->pageCount << " pages. It's ID is " << this->ID << "." << endl;
 }
 
 bool Book::matches(const Book& secondBook) const {
-  return this->title.compare(secondBook.title) == 0 && this->author.compare(secondBook.author) == 0 && this->genre.compare(secondBook.genre) == 0 && this->subgenre.compare(secondBook.subgenre) == 0 && this->publisher.compare(secondBook.publisher) == 0 && this->pageCount == secondBook.pageCount && this->ID == secondBook.ID;
+  return this->title.compare(secondBook.title) == 0 && this->author.compare(secondBook.author) == 0 && this->genre.compare(secondBook.genre) == 0 && this->subgenre.compare(secondBook.subgenre) == 0 && this->publisher.compare(secondBook.publisher) == 0 && this->pageCount == secondBook.pageCount;
 }
 
 ostream& operator<<(ostream& os, const Book& book) {

@@ -26,7 +26,7 @@ class Address {
 		bool operator>(const Address&) const;
 
 		//constructors
-		Address(const string& streetNumber = "Unknown", const string& streetName = "Unknown", const string& cityName = "Unknown", const string& provinceName = "Unknown", const string& postalCode = "Unknown");
+		Address(const string& streetNumber = "Unknown Street Number", const string& streetName = "Unknown Street", const string& cityName = "Unknown City", const string& provinceName = "Unknown Province", const string& postalCode = "Unknown Postal Code");
     ~Address();
     Address(const Address &copyAddress);
 

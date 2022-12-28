@@ -32,12 +32,13 @@ class Library {
 		void operator=(const Library&);
 
 		//constructors
-		Library(const string& name = "Unknown Name", const Address& address = Address());
+		Library(const string& name = "Unknown Library Name", const Address& address = Address());
+    ~Library();
 		Library(const Library &copyLibrary);
 
 		//getters
 		const vector<Book *> &getBooks() const;
-    int getNextBookID() const;
+    const int getNextBookID() const;
     const string& getName() const;
     const Address& getAddress() const;
 
@@ -48,13 +49,22 @@ class Library {
     //remove functions
     bool removeBook(Book *book);
     bool removeBookByCriteria(const Criteria &criteria);
+    bool removeBookBySeveralCriteria(const vector<Criteria> &criteriaVector);
 
     bool removeBooks(Book *book);
     bool removeBooksByCriteria(const Criteria &criteria);
     bool removeBooksBySeveralCriteria(const vector<Criteria> &criteriaVector);
-    
-		//print formatting
+
+    void emptyLibrary();
+
+    //print formatting
 		void defaultPrint(ostream &os) const;
+
+    //get book functions
+    bool getBookByCriteria(const Criteria &criteria, Book **book) const;
+    bool getBooksByCriteria(const Criteria &criteria, vector<Book *> &books) const;
+    bool getBookBySeveralCriteria(const vector<Criteria> &criteriaVector, Book **book) const;
+    bool getBooksBySeveralCriteria(const vector<Criteria> &criteriaVector, vector<Book *> &books) const;
 
     //sort functions
     void sortBooksByOrderAdded();
@@ -72,6 +82,6 @@ class Library {
     vector<Book *> bookVector;
     Address address;
     string name;
-    static int nextBookID;
+    int nextBookID;
 };
 #endif
