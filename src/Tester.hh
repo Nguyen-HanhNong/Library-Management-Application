@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include "TestBook.hh"
+#include "TestLibrary.hh"
 
 using namespace std;
 
@@ -14,5 +15,6 @@ class Tester {
 	
 	private:
 		TestBook bookTester;
+		TestLibrary libraryTester;
 };
 #endif

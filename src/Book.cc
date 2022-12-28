@@ -12,7 +12,7 @@ Book::Book(const string& title, const string& author, const string& genre, const
 {
 }
 
-Book::Book(const Book &copyBook): title(copyBook.title), author(copyBook.author), genre(copyBook.genre), subgenre(copyBook.subgenre), publisher(copyBook.publisher), pageCount(copyBook.pageCount)
+Book::Book(const Book &copyBook): title(copyBook.title), author(copyBook.author), genre(copyBook.genre), subgenre(copyBook.subgenre), publisher(copyBook.publisher), pageCount(copyBook.pageCount), ID(copyBook.ID)
 {
 }
 
@@ -41,15 +41,11 @@ const int Book::getPageCount() const {
 }
 
 void Book::print(ostream &os) const {
-  os << "This book is named " << this->title << " and is written by " << this->author << ".\n The genre and subgenre of the book is the following " << this->genre << ", " << this->subgenre << ". \n This book is published by " << this->publisher << " and has " << this->pageCount << " pages. " << endl;
+  os << "This book is named " << this->title << " and is written by " << this->author << ".\n The genre and subgenre of the book is the following " << this->genre << ", " << this->subgenre << ". \n This book is published by " << this->publisher << " and has " << this->pageCount << " pages. It's ID is " << this->ID << "." << endl;
 }
 
-bool Book::matches(const Book &book) const {
-  if(this->author.compare(book.author) != 0 || this->title.compare(book.title) != 0 || this->genre.compare(book.genre) != 0 || this->subgenre.compare(book.subgenre) != 0 || this->publisher.compare(book.publisher) != 0 || this->pageCount != book.pageCount) {
-    return false;
-  } else {
-    return true;
-  }
+bool Book::matches(const Book& secondBook) const {
+  return this->title.compare(secondBook.title) == 0 && this->author.compare(secondBook.author) == 0 && this->genre.compare(secondBook.genre) == 0 && this->subgenre.compare(secondBook.subgenre) == 0 && this->publisher.compare(secondBook.publisher) == 0 && this->pageCount == secondBook.pageCount && this->ID == secondBook.ID;
 }
 
 ostream& operator<<(ostream& os, const Book& book) {
@@ -72,6 +68,7 @@ void Book::operator=(const Book& book) {
   this->subgenre = book.subgenre;
   this->publisher = book.publisher;
   this->pageCount = book.pageCount;
+  this->ID = book.ID;
 }
 
 bool Book::compareOrderAdded(const Book *book1, const Book *book2) {

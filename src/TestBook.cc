@@ -60,7 +60,7 @@ void TestBook::initFromFile() {
       currentLine.push_back("Unknown Publisher");
     }
 
-    bookVector.push_back(new Book(currentLine.at(0), currentLine.at(1), currentLine.at(2), currentLine.at(3), currentLine.at(5), stoi(currentLine.at(4))));
+    bookVector.push_back(new Book(currentLine.at(0), currentLine.at(1), currentLine.at(2), currentLine.at(3), currentLine.at(5), stoi(currentLine.at(4)), 5));
   }
 
   file.close();

@@ -32,19 +32,27 @@ class Library {
 		void operator=(const Library&);
 
 		//constructors
-		Library(vector <Book *> bookVector, const Address& address);
+		Library(const string& name = "Unknown Name", const Address& address = Address());
 		Library(const Library &copyLibrary);
 
 		//getters
 		const vector<Book *> &getBooks() const;
+    int getNextBookID() const;
+    const string& getName() const;
     const Address& getAddress() const;
 
     //add functions
+    bool addBook(const string& title, const string& author, const string& genre, const string& subgenre, const string& publisher, int pageCount);
     bool addBook(Book *book);
 
     //remove functions
     bool removeBook(Book *book);
+    bool removeBookByCriteria(const Criteria &criteria);
 
+    bool removeBooks(Book *book);
+    bool removeBooksByCriteria(const Criteria &criteria);
+    bool removeBooksBySeveralCriteria(const vector<Criteria> &criteriaVector);
+    
 		//print formatting
 		void defaultPrint(ostream &os) const;
 
@@ -63,6 +71,7 @@ class Library {
 	private:
     vector<Book *> bookVector;
     Address address;
+    string name;
     static int nextBookID;
 };
 #endif
