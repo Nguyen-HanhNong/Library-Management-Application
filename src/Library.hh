@@ -48,9 +48,9 @@ class Library {
     bool addBook(Book *book);
 
     //remove functions
-    bool removeBook(Book *book);
-    bool removeBookByCriteria(const Criteria &criteria);
-    bool removeBookBySeveralCriteria(const vector<Criteria *> &criteriaVector);
+    bool removeBook(Book *book, Book **removedBook);
+    bool removeBookByCriteria(const Criteria *criteria, Book **removedBook);
+    bool removeBookBySeveralCriteria(const vector<Criteria *> &criteriaVector, Book **removedBook);
 
     void emptyLibrary();
 

@@ -10,6 +10,8 @@
 
 #include "Library.hh"
 
+#define MAX_ATTEMPTS_PER_TEST 5
+
 using namespace std;
 
 class TestLibrary {

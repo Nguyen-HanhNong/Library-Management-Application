@@ -6,14 +6,12 @@ Library::Library(const string& name, const Address& address): address(address), 
 
 Library::~Library()
 {
-  for(int i = 0; i < bookVector.size(); i++) {
-    delete bookVector[i];
-  }
+  emptyLibrary();
 }
 
 Library::Library(const Library &copyLibrary): address(copyLibrary.address), name(copyLibrary.name)
 {
-  for(int i = 0; i < copyLibrary.bookVector.size(); i++) {
+  for(int i = 0; i < copyLibrary.bookVector.size(); ++i) {
     bookVector.push_back(new Book(*copyLibrary.bookVector[i]));
   }
 }
@@ -41,7 +39,7 @@ const Address& Library::getAddress() const {
 bool Library::addBook(const string& title, const string& author, const string& genre, const string& subgenre, const string& publisher, int pageCount) {
   Book *book = new Book(title, author, genre, subgenre, publisher, pageCount, nextBookID);
 
-  for(int i = 0; i < bookVector.size(); i++) {
+  for(int i = 0; i < bookVector.size(); ++i) {
     if(*bookVector[i] == *book) {
       delete book;
       cout << "Error: Book already exists in library." << endl;
@@ -55,7 +53,7 @@ bool Library::addBook(const string& title, const string& author, const string& g
 }
 
 bool Library::addBook(Book *book) {
-  for(int i = 0; i < bookVector.size(); i++) {
+  for(int i = 0; i < bookVector.size(); ++i) {
     if(*bookVector[i] == *book) {
       cout << "Error: Book already exists in library." << endl;
       return false;
@@ -67,32 +65,36 @@ bool Library::addBook(Book *book) {
   return true;
 }
 
-bool Library::removeBook(Book *book) {
-  for(int i = 0; i < bookVector.size(); i++) {
+bool Library::removeBook(Book *book, Book **removedBook) {
+  for(int i = 0; i < bookVector.size(); ++i) {
     if(*bookVector[i] == *book) {
+      *removedBook = bookVector[i];
       bookVector.erase(bookVector.begin() + i);
       return true;
     }
   }
 
+  *removedBook = NULL;
   cout << "Error: Book does not exist in the library." << endl;
   return false;
 }
 
-bool Library::removeBookByCriteria(const Criteria &criteria) {
-  for(int i = 0; i < bookVector.size(); i++) {
-    if(criteria.matches(*bookVector[i])) {
+bool Library::removeBookByCriteria(const Criteria *criteria, Book **removedBook) {
+  for(int i = 0; i < bookVector.size(); ++i) {
+    if(criteria->matches(*bookVector[i])) {
+      *removedBook = bookVector[i];
       bookVector.erase(bookVector.begin() + i);
       return true;
     }
   }
 
+  *removedBook = NULL;
   cout << "Error: Book does not exist in the library." << endl;
   return false;
 }
 
-bool Library::removeBookBySeveralCriteria(const vector<Criteria *> &criteria) {
-  for(int i = 0; i < bookVector.size(); i++) {
+bool Library::removeBookBySeveralCriteria(const vector<Criteria *> &criteria, Book **removedBook) {
+  for(int i = 0; i < bookVector.size(); ++i) {
     bool match = true;
     for(int j = 0; j < criteria.size(); j++) {
       if(!criteria[j]->matches(*bookVector[i])) {
@@ -102,20 +104,22 @@ bool Library::removeBookBySeveralCriteria(const vector<Criteria *> &criteria) {
     }
 
     if(match) {
+      *removedBook = bookVector[i];
       bookVector.erase(bookVector.begin() + i);
       return true;
     }
   }
 
+  *removedBook = NULL;
   cout << "Error: Book does not exist in the library." << endl;
   return false;
 }
 
 void Library::emptyLibrary() {
-  for(int i = 0; i < bookVector.size(); i++) {
-    delete bookVector[i];
+  while(bookVector.size() > 0) {
+    delete bookVector.back();
+    bookVector.pop_back();
   }
-
   bookVector.clear();
   nextBookID = 0;
 }
@@ -123,7 +127,7 @@ void Library::emptyLibrary() {
 void Library::defaultPrint(ostream &os) const {
   os << "The name of the library is: " << name << " and is at the following address: " << address << endl;
   os << "The books in the library: " << endl;
-  for(int i = 0; i < bookVector.size(); i++) {
+  for(int i = 0; i < bookVector.size(); ++i) {
     os << *bookVector[i] << endl;
   }
 }
@@ -160,7 +164,7 @@ bool Library::matches(const Library &library) const {
   if(bookVector.size() != library.bookVector.size()) {
     return false;
   }
-  for(int i = 0; i < bookVector.size(); i++) {
+  for(int i = 0; i < bookVector.size(); ++i) {
     if(*bookVector[i] != *library.bookVector[i]) {
       return false;
     }
@@ -184,11 +188,11 @@ bool Library::operator!=(const Library &library) const {
 void Library::operator=(const Library &library) {
   address = library.address;
   name = library.name;
-  for(int i = 0; i < bookVector.size(); i++) {
+  for(int i = 0; i < bookVector.size(); ++i) {
     delete bookVector[i];
   }
   bookVector.clear();
-  for(int i = 0; i < library.bookVector.size(); i++) {
+  for(int i = 0; i < library.bookVector.size(); ++i) {
     bookVector.push_back(new Book(*library.bookVector[i]));
   }
 }
