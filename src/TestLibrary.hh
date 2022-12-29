@@ -20,6 +20,7 @@ class TestLibrary {
 
 	private:
 		void initLibraryFromFile(Library& library);
+		const int getRandomizedIndex() const;
 
 		/* Testing getter functions in Library class */
 		void testGetterFunctions();
@@ -29,8 +30,20 @@ class TestLibrary {
 		void testGetName();
 		void testGetAddress();
 
+		/* Testing add functions */
+		void testAddFunctions();
+
 		void testMatchingBooks();
+		void testAddBooks();
+
+		/* Testing remove functions */
+		void testRemoveFunctions();
+
+		void testRemoveBook();
+		void testRemoveBookByCriteria();
+		void testRemoveBookBySeveralCriteria();
 
 		Library library;
+		vector<Criteria> criteriaVector;
 };
 #endif

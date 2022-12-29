@@ -30,6 +30,10 @@ const int Library::getNextBookID() const {
   return this->nextBookID;
 }
 
+const int Library::getBookCount() const {
+  return this->bookVector.size();
+}
+
 const Address& Library::getAddress() const {
   return this->address;
 }
@@ -87,61 +91,24 @@ bool Library::removeBookByCriteria(const Criteria &criteria) {
   return false;
 }
 
-bool Library::removeBooks(Book *book) {
-  bool removed = false;
+bool Library::removeBookBySeveralCriteria(const vector<Criteria *> &criteria) {
   for(int i = 0; i < bookVector.size(); i++) {
-    if(*bookVector[i] == *book) {
-      bookVector.erase(bookVector.begin() + i);
-      removed = true;
-    }
-  }
-
-  if(!removed) {
-    cout << "Error: No books matching the book passed in were able to be removed. " << endl;
-  }
-
-  return removed;
-}
-
-bool Library::removeBooksByCriteria(const Criteria &criteria) {
-  bool removed = false;
-  for(int i = 0; i < bookVector.size(); i++) {
-    if(criteria.matches(*bookVector[i])) {
-      bookVector.erase(bookVector.begin() + i);
-      removed = true;
-    }
-  }
-
-  if(!removed) {
-    cout << "Error: No books matching the criteria were able to be removed. " << endl;
-  }
-
-  return removed;
-}
-
-bool Library::removeBooksBySeveralCriteria(const vector<Criteria> &criteriaVector) {
-  bool removed = false;
-  bool matchAllCriteria = true;
-
-  for(int i = 0; i < bookVector.size(); i++) {
-    int matchingCriteriaCount = 0;
-    for(int j = 0; j < criteriaVector.size(); j++) {
-      if(criteriaVector[j].matches(*bookVector[i])) {
-        ++matchingCriteriaCount;
+    bool match = true;
+    for(int j = 0; j < criteria.size(); j++) {
+      if(!criteria[j]->matches(*bookVector[i])) {
+        match = false;
+        break;
       }
     }
 
-    if(matchingCriteriaCount == criteriaVector.size()) {
+    if(match) {
       bookVector.erase(bookVector.begin() + i);
-      removed = true;
+      return true;
     }
   }
 
-  if(!removed) {
-    cout << "Error: No books matching the criteria were able to be removed. " << endl;
-  }
-
-  return removed;
+  cout << "Error: Book does not exist in the library." << endl;
+  return false;
 }
 
 void Library::emptyLibrary() {

@@ -39,6 +39,7 @@ class Library {
 		//getters
 		const vector<Book *> &getBooks() const;
     const int getNextBookID() const;
+    const int getBookCount() const;
     const string& getName() const;
     const Address& getAddress() const;
 
@@ -49,11 +50,7 @@ class Library {
     //remove functions
     bool removeBook(Book *book);
     bool removeBookByCriteria(const Criteria &criteria);
-    bool removeBookBySeveralCriteria(const vector<Criteria> &criteriaVector);
-
-    bool removeBooks(Book *book);
-    bool removeBooksByCriteria(const Criteria &criteria);
-    bool removeBooksBySeveralCriteria(const vector<Criteria> &criteriaVector);
+    bool removeBookBySeveralCriteria(const vector<Criteria *> &criteriaVector);
 
     void emptyLibrary();
 
@@ -63,8 +60,8 @@ class Library {
     //get book functions
     bool getBookByCriteria(const Criteria &criteria, Book **book) const;
     bool getBooksByCriteria(const Criteria &criteria, vector<Book *> &books) const;
-    bool getBookBySeveralCriteria(const vector<Criteria> &criteriaVector, Book **book) const;
-    bool getBooksBySeveralCriteria(const vector<Criteria> &criteriaVector, vector<Book *> &books) const;
+    bool getBookBySeveralCriteria(const vector<Criteria *> &criteriaVector, Book **book) const;
+    bool getBooksBySeveralCriteria(const vector<Criteria *> &criteriaVector, vector<Book *> &books) const;
 
     //sort functions
     void sortBooksByOrderAdded();

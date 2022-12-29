@@ -10,6 +10,8 @@ TestLibrary::~TestLibrary()
 
 void TestLibrary::launch(){
   testGetterFunctions();
+  testAddFunctions();
+  testRemoveFunctions();
 }
 
 void TestLibrary::testGetterFunctions() {
@@ -70,6 +72,16 @@ void TestLibrary::initLibraryFromFile(Library& library) {
   }
 
   file.close();
+}
+
+const int TestLibrary::getRandomizedIndex() const {
+  std::random_device rd; 
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> distr(0, library.getBookCount());
+
+  const int returnInteger = distr(gen);
+
+  return returnInteger;
 }
 
 void TestLibrary::testGetBooks() {
@@ -159,6 +171,13 @@ void TestLibrary::testGetAddress() {
   cout << "Test 4: Get Address function: Passed" << endl;
 }
 
+void TestLibrary::testAddFunctions() {
+  testMatchingBooks();
+  testAddBooks();
+
+  cout << "SUCCESS: All adder functions passed" << endl;
+}
+
 void TestLibrary::testMatchingBooks() {
   library.emptyLibrary();
 
@@ -181,7 +200,233 @@ void TestLibrary::testMatchingBooks() {
   cout << "Test 5: Matching Books Cannot Be Added: Passed" << endl;
 }
 
+void TestLibrary::testAddBooks() {
+  library.emptyLibrary();
 
+  Book *book1 = new Book("Book 1", "Author 1", "Genre 1", "Subgenre 1", "Publisher 1", 100);
+  Book *book2 = new Book("Book 2", "Author 2", "Genre 2", "Subgenre 2", "Publisher 2", 200);
 
+  if(library.addBook(book1) == false) {
+    cerr << "Error: Book 1 should be able to be added to the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+  if(library.addBook(book2) == false) {
+    cerr << "Error: Book 2 should be able to be added to the library." << endl;
+    exit(EXIT_FAILURE);
+  }
 
+  vector<Book *> books = library.getBooks();
 
+  if(books.size() != 2) {
+    cerr << "Error: There should be 2 books in the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+  if(books.at(0) != book1) {
+    cerr << "Error: The first book in the library should be Book 1." << endl;
+    exit(EXIT_FAILURE);
+  }
+  if(books.at(1) != book2) {
+    cerr << "Error: The second book in the library should be Book 2." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  cout << "Test 6: Add Books function: Passed" << endl;
+}
+
+void TestLibrary::testRemoveFunctions() {
+  testRemoveBook();
+  testRemoveBookByCriteria();
+  testRemoveBookBySeveralCriteria();
+}
+
+void TestLibrary::testRemoveBook() {
+  library.emptyLibrary();
+
+  Book *book1 = new Book("Book 1", "Author 1", "Genre 1", "Subgenre 1", "Publisher 1", 100);
+  Book *book2 = new Book("Book 2", "Author 2", "Genre 2", "Subgenre 2", "Publisher 2", 200);
+
+  if(library.addBook(book1) == false) {
+    cerr << "Error: Book 1 should be able to be added to the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+  if(library.addBook(book2) == false) {
+    cerr << "Error: Book 2 should be able to be added to the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if(library.removeBook(book1) == false) {
+    cerr << "Error: Book 1 should be able to be removed from the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+  if(library.removeBook(book1) == true) {
+    cerr << "Error: Book 1 should not be able to be removed from the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  vector<Book *> books = library.getBooks();
+
+  if(books.size() != 1) {
+    cerr << "Error: There should be 1 book in the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+  if(books.at(0) != book2) {
+    cerr << "Error: The first book in the library should be Book 2." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  initLibraryFromFile(library);
+
+  for(int i = 0; i < 10; i++) {
+    if(library.removeBook(books.at(i)) == false) {
+      cerr << "Error: Book " << i + 1 << " should be able to be removed from the library." << endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  books = library.getBooks();
+
+  if(books.size() != 0) {
+    cerr << "Error: There should be 0 books in the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  cout << "Test 7: Remove Book function: Passed" << endl;
+}
+
+void TestLibrary::testRemoveBookByCriteria() {
+  initLibraryFromFile(library);
+
+  int startingSize = library.getBookCount();
+  int randomTitleIndex = getRandomizedIndex();
+  Book *titleBook = library.getBooks().at(randomTitleIndex);
+  Criteria *titleCriteria = new Title_Criteria(titleBook->getTitle());
+
+  if(library.removeBookByCriteria(*titleCriteria) == false) {
+    cerr << "Error: Book " << titleBook->getTitle() << " should be able to be removed from the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  int randomAuthorIndex = getRandomizedIndex();
+  Book *authorBook = library.getBooks().at(randomAuthorIndex);
+  Criteria *authorCriteria = new Author_Criteria(authorBook->getAuthor());
+
+  if(library.removeBookByCriteria(*authorCriteria) == false) {
+    cerr << "Error: Book " << authorBook->getTitle() << " should be able to be removed from the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  int randomGenreIndex = getRandomizedIndex();
+  Book *genreBook = library.getBooks().at(randomGenreIndex);
+  Criteria *genreCriteria = new Genre_Criteria(genreBook->getGenre());
+
+  if(library.removeBookByCriteria(*genreCriteria) == false) {
+    cerr << "Error: Book " << genreBook->getTitle() << " should be able to be removed from the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  int randomSubgenreIndex = getRandomizedIndex();
+  Book *subgenreBook = library.getBooks().at(randomSubgenreIndex);
+  Criteria *subgenreCriteria = new Subgenre_Criteria(subgenreBook->getSubgenre());
+
+  if(library.removeBookByCriteria(*subgenreCriteria) == false) {
+    cerr << "Error: Book " << subgenreBook->getTitle() << " should be able to be removed from the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  int randomPublisherIndex = getRandomizedIndex();
+  Book *publisherBook = library.getBooks().at(randomPublisherIndex);
+  Criteria *publisherCriteria = new Publisher_Criteria(publisherBook->getPublisher());
+
+  if(library.removeBookByCriteria(*publisherCriteria) == false) {
+    cerr << "Error: Book " << publisherBook->getTitle() << " should be able to be removed from the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  int randomPagesIndex = getRandomizedIndex();
+  Book *pagesBook = library.getBooks().at(randomPagesIndex);
+  Criteria *pagesCriteria = new Page_Criteria(pagesBook->getPageCount());
+
+  if(library.removeBookByCriteria(*pagesCriteria) == false) {
+    cerr << "Error: Book " << pagesBook->getTitle() << " should be able to be removed from the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  for (int i = 0; i < library.getBooks().size(); ++i) {
+    if(library.getBooks().at(i) == titleBook || library.getBooks().at(i) == authorBook || library.getBooks().at(i) == genreBook || library.getBooks().at(i) == subgenreBook || library.getBooks().at(i) == publisherBook || library.getBooks().at(i) == pagesBook) {
+      cerr << "Error: Book should not be in the library." << endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  if(library.getBookCount() != startingSize - 6) {
+    cerr << "Error: There should be " << startingSize - 6 << " books in the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  delete titleCriteria;
+  delete authorCriteria;
+  delete genreCriteria;
+  delete subgenreCriteria;
+  delete publisherCriteria;
+  delete pagesCriteria;
+
+  delete titleBook;
+  delete authorBook;
+  delete genreBook;
+  delete subgenreBook;
+  delete publisherBook;
+  delete pagesBook;
+
+  cout << "Test 8: Remove Book by Criteria function: Passed" << endl;
+}
+
+void TestLibrary::testRemoveBookBySeveralCriteria() {
+  initLibraryFromFile(library);
+
+  int oldNumberOfBooks = library.getBookCount();
+  int randomBookIndex = getRandomizedIndex();
+  Book *book = library.getBooks().at(randomBookIndex);
+
+  Criteria *titleCriteria = new Title_Criteria(book->getTitle());
+  Criteria *authorCriteria = new Author_Criteria(book->getAuthor());
+  Criteria *genreCriteria = new Genre_Criteria(book->getGenre());
+  Criteria *subgenreCriteria = new Subgenre_Criteria(book->getSubgenre());
+  Criteria *publisherCriteria = new Publisher_Criteria(book->getPublisher());
+  Criteria *pagesCriteria = new Page_Criteria(book->getPageCount());
+
+  vector<Criteria *> criteriaVector;
+  criteriaVector.push_back(titleCriteria);
+  criteriaVector.push_back(authorCriteria);
+  criteriaVector.push_back(genreCriteria);
+  criteriaVector.push_back(subgenreCriteria);
+  criteriaVector.push_back(publisherCriteria);
+  criteriaVector.push_back(pagesCriteria);
+
+  if(library.removeBookBySeveralCriteria(criteriaVector) == false) {
+    cerr << "Error: Book " << book->getTitle() << " should be able to be removed from the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if(library.getBookCount() != oldNumberOfBooks - 1) {
+    cerr << "Error: Book removal operation did remove the proper number of books. " << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  for (int i = 0; i < library.getBooks().size(); ++i) {
+    if(library.getBooks().at(i) == book) {
+      cerr << "Error: Book should not be in the library." << endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  delete titleCriteria;
+  delete authorCriteria;
+  delete genreCriteria;
+  delete subgenreCriteria;
+  delete publisherCriteria;
+  delete pagesCriteria;
+  
+  delete book;
+
+  cout << "Test 9: Remove Book by Several Criteria function: Passed" << endl;
+}
