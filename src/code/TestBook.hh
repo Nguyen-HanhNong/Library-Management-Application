@@ -24,7 +24,7 @@ class TestBook {
 		void initFromFile();
 
 		void printAllBooks();
-		void compareBooks() const;
+		void compareBooks();
 
 		/* Test all criteria for the books */
 		void testAllCriteria();
@@ -37,8 +37,9 @@ class TestBook {
 		void testPageCountCriteria() const;
 
 		const int getRandomizedIndex() const;
+		void emptyBookVector();
 	private:
-		vector<Book*> bookVector;
+		vector<Book*>* bookVector;
 
 };
 #endif

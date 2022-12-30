@@ -6,6 +6,7 @@ TestLibrary::TestLibrary(): library(Library("Test Library", Address("123 Test St
 
 TestLibrary::~TestLibrary()
 {
+  library.emptyLibrary();
 }
 
 void TestLibrary::launch(){

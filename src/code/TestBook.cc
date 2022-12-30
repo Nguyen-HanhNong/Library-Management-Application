@@ -1,23 +1,39 @@
 #include "TestBook.hh"
 
-TestBook::TestBook(): bookVector(vector<Book*>())
+TestBook::TestBook(): bookVector(new vector<Book*>())
 {
 }
 
 TestBook::~TestBook() {
-  for (int i = 0; i < bookVector.size(); ++i) {
-    delete bookVector[i];
+  while(bookVector->size() > 0) {
+    delete bookVector->back();
+    bookVector->pop_back();
   }
+  bookVector->clear();
+  bookVector->shrink_to_fit();
+  delete bookVector;
 }
 
 void TestBook::launch() {
   printAllBooks();
   compareBooks();
   testAllCriteria();
+
+  cout << "BOOK TESTING: All tests passed!" << endl
+       << endl;
+}
+
+void TestBook::emptyBookVector() {
+  while(bookVector->size() > 0) {
+    delete bookVector->back();
+    bookVector->pop_back();
+  }
+  bookVector->clear();
+  bookVector->shrink_to_fit();
 }
 
 void TestBook::initFromFile() {
-  bookVector.clear();
+  emptyBookVector();
 
   string line;
   string operatingSystem;
@@ -61,25 +77,32 @@ void TestBook::initFromFile() {
       currentLine.push_back("Unknown Publisher");
     }
 
-    bookVector.push_back(new Book(currentLine.at(0), currentLine.at(1), currentLine.at(2), currentLine.at(3), currentLine.at(5), stoi(currentLine.at(4)), 5));
+    bookVector->push_back(new Book(currentLine.at(0), currentLine.at(1), currentLine.at(2), currentLine.at(3), currentLine.at(5), stoi(currentLine.at(4)), 5));
   }
 
   file.close();
 }
 
 void TestBook::printAllBooks() {
-  initFromFile();
-
-  for (int i = 0; i < bookVector.size(); ++i) {
-    cout << *bookVector.at(i) << endl;
+  if(bookVector->size() <= 0) {
+    initFromFile();
   }
-  cout << "Test successfully printed all the books!" << endl;
+
+  for (int i = 0; i < bookVector->size(); ++i) {
+    cout << *bookVector->at(i) << endl;
+  }
+
+  cout << "Test 1: Print all books: PASSED" << endl;
 }
 
-void TestBook::compareBooks() const {
+void TestBook::compareBooks() {
+  if(bookVector->size() <= 0) {
+    initFromFile();
+  }
+
   /* Test 1: Two different books */
-  Book *bookOne = bookVector.at(0);
-  Book *bookTwo = bookVector.at(1);
+  Book *bookOne = bookVector->at(0);
+  Book *bookTwo = bookVector->at(1);
 
   if((*bookOne == *bookTwo) == true) {
     cerr << "These two books should not be considered to be the same. Abort." << endl;
@@ -87,8 +110,8 @@ void TestBook::compareBooks() const {
   }
 
   /* Test 2: Two same books */
-  bookOne = bookVector.at(0);
-  bookTwo = bookVector.at(0);
+  bookOne = bookVector->at(0);
+  bookTwo = bookVector->at(0);
 
   if((*bookOne == *bookTwo) == false) {
     cerr << "These two books should be considered to be the same. Abort." << endl;
@@ -107,11 +130,14 @@ void TestBook::compareBooks() const {
   delete bookThree;
   delete bookFour;
 
-  cout << "Test succesfully passed the matching functionality of the books!" << endl;
+  cout << "Test 2: Compare books: PASSED" << endl;
 }
 
 void TestBook::testAllCriteria() {
-  initFromFile();
+  if(bookVector->size() <= 0) {
+    initFromFile();
+  }
+
   for (int i = 0; i < NUM_ATTEMPTS_PER_TEST; ++i) {
     testTitleCriteria();
     testAuthorCriteria();
@@ -121,13 +147,13 @@ void TestBook::testAllCriteria() {
     testPageCountCriteria();
   }
 
-  cout << "Successfully passed all criteria tests!" << endl << endl;
+  cout << "Test 3: Test all criteria: PASSED" << endl;
 }
 
 const int TestBook::getRandomizedIndex() const {
   std::random_device rd; 
   std::mt19937 gen(rd());
-  std::uniform_int_distribution<> distr(0, bookVector.size() - 1);
+  std::uniform_int_distribution<> distr(0, bookVector->size() - 1);
 
   const int returnInteger = distr(gen);
 
@@ -136,17 +162,17 @@ const int TestBook::getRandomizedIndex() const {
 
 void TestBook::testTitleCriteria() const {
 
-  Criteria *matching_title = new Title_Criteria(bookVector.at(getRandomizedIndex())->getTitle());
+  Criteria *matching_title = new Title_Criteria(bookVector->at(getRandomizedIndex())->getTitle());
   Criteria *non_matching_title = new Title_Criteria("This should not be a matching title");
 
   bool matching_title_boolean = false;
   bool non_matching_title_boolean = false;
 
-  for (int i = 0; i < bookVector.size(); ++i) {
-    if(matching_title->matches(*bookVector.at(i))) {
+  for (int i = 0; i < bookVector->size(); ++i) {
+    if(matching_title->matches(*bookVector->at(i))) {
       matching_title_boolean = true;
     }
-    if(non_matching_title->matches(*bookVector.at(i))) {
+    if(non_matching_title->matches(*bookVector->at(i))) {
       non_matching_title_boolean = true;
     }
   }
@@ -169,17 +195,17 @@ void TestBook::testTitleCriteria() const {
 
 void TestBook::testAuthorCriteria() const {
 
-  Criteria *matching_author = new Author_Criteria(bookVector.at(getRandomizedIndex())->getAuthor());
+  Criteria *matching_author = new Author_Criteria(bookVector->at(getRandomizedIndex())->getAuthor());
   Criteria *non_matching_author = new Author_Criteria("This should not be a matching author");
 
   bool matching_author_boolean = false;
   bool non_matching_author_boolean = false;
 
-  for (int i = 0; i < bookVector.size(); ++i) {
-    if(matching_author->matches(*bookVector.at(i))) {
+  for (int i = 0; i < bookVector->size(); ++i) {
+    if(matching_author->matches(*bookVector->at(i))) {
       matching_author_boolean = true;
     }
-    if(non_matching_author->matches(*bookVector.at(i))) {
+    if(non_matching_author->matches(*bookVector->at(i))) {
       non_matching_author_boolean = true;
     }
   }
@@ -200,17 +226,17 @@ void TestBook::testAuthorCriteria() const {
 
 void TestBook::testGenreCriteria() const {
 
-  Criteria *matching_genre = new Genre_Criteria(bookVector.at(getRandomizedIndex())->getGenre());
+  Criteria *matching_genre = new Genre_Criteria(bookVector->at(getRandomizedIndex())->getGenre());
   Criteria *non_matching_genre = new Genre_Criteria("This should not be a matching genre");
 
   bool matching_genre_boolean = false;
   bool non_matching_genre_boolean = false;
 
-  for (int i = 0; i < bookVector.size(); ++i) {
-    if(matching_genre->matches(*bookVector.at(i))) {
+  for (int i = 0; i < bookVector->size(); ++i) {
+    if(matching_genre->matches(*bookVector->at(i))) {
       matching_genre_boolean = true;
     }
-    if(non_matching_genre->matches(*bookVector.at(i))) {
+    if(non_matching_genre->matches(*bookVector->at(i))) {
       non_matching_genre_boolean = true;
     }
   }
@@ -231,17 +257,17 @@ void TestBook::testGenreCriteria() const {
 
 void TestBook::testSubgenreCriteria() const {
 
-  Criteria *matching_subgenre = new Subgenre_Criteria(bookVector.at(getRandomizedIndex())->getSubgenre());
+  Criteria *matching_subgenre = new Subgenre_Criteria(bookVector->at(getRandomizedIndex())->getSubgenre());
   Criteria *non_matching_subgenre = new Subgenre_Criteria("This should not be a matching subgenre");
 
   bool matching_subgenre_boolean = false;
   bool non_matching_subgenre_boolean = false;
 
-  for (int i = 0; i < bookVector.size(); ++i) {
-    if(matching_subgenre->matches(*bookVector.at(i))) {
+  for (int i = 0; i < bookVector->size(); ++i) {
+    if(matching_subgenre->matches(*bookVector->at(i))) {
       matching_subgenre_boolean = true;
     }
-    if(non_matching_subgenre->matches(*bookVector.at(i))) {
+    if(non_matching_subgenre->matches(*bookVector->at(i))) {
       non_matching_subgenre_boolean = true;
     }
   }
@@ -262,17 +288,17 @@ void TestBook::testSubgenreCriteria() const {
 
 void TestBook::testPublisherCriteria() const {
 
-  Criteria *matching_publisher = new Publisher_Criteria(bookVector.at(getRandomizedIndex())->getPublisher());
+  Criteria *matching_publisher = new Publisher_Criteria(bookVector->at(getRandomizedIndex())->getPublisher());
   Criteria *non_matching_publisher = new Publisher_Criteria("This should not be a matching publisher");
 
   bool matching_publisher_boolean = false;
   bool non_matching_publisher_boolean = false;
 
-  for (int i = 0; i < bookVector.size(); ++i) {
-    if(matching_publisher->matches(*bookVector.at(i))) {
+  for (int i = 0; i < bookVector->size(); ++i) {
+    if(matching_publisher->matches(*bookVector->at(i))) {
       matching_publisher_boolean = true;
     }
-    if(non_matching_publisher->matches(*bookVector.at(i))) {
+    if(non_matching_publisher->matches(*bookVector->at(i))) {
       non_matching_publisher_boolean = true;
     }
   }
@@ -293,7 +319,7 @@ void TestBook::testPublisherCriteria() const {
 
 void TestBook::testPageCountCriteria() const {
 
-  Page_Criteria *matching_pagecount = new Page_Criteria(bookVector.at(getRandomizedIndex())->getPageCount());
+  Page_Criteria *matching_pagecount = new Page_Criteria(bookVector->at(getRandomizedIndex())->getPageCount());
   Page_Criteria *non_matching_pagecount = new Page_Criteria(-1);
   Page_Criteria *less_than_pagecount = new Page_Criteria(1000000);
   Page_Criteria *more_than_pagecount = new Page_Criteria(-500);
@@ -303,17 +329,17 @@ void TestBook::testPageCountCriteria() const {
   int less_than_pagecount_counter = 0;
   int more_than_pagecount_counter = 0;
 
-  for (int i = 0; i < bookVector.size(); ++i) {
-    if(matching_pagecount->matches(*bookVector.at(i))) {
+  for (int i = 0; i < bookVector->size(); ++i) {
+    if(matching_pagecount->matches(*bookVector->at(i))) {
       matching_pagecount_boolean = true;
     }
-    if(non_matching_pagecount->matches(*bookVector.at(i))) {
+    if(non_matching_pagecount->matches(*bookVector->at(i))) {
       non_matching_pagecount_boolean = true;
     }
-    if(less_than_pagecount->lessThan(*bookVector.at(i))) {
+    if(less_than_pagecount->lessThan(*bookVector->at(i))) {
       ++less_than_pagecount_counter;
     }
-    if(more_than_pagecount->moreThan(*bookVector.at(i))) {
+    if(more_than_pagecount->moreThan(*bookVector->at(i))) {
       ++more_than_pagecount_counter;
     }
   }
@@ -327,11 +353,11 @@ void TestBook::testPageCountCriteria() const {
     cerr << *non_matching_pagecount << "This criteria was should not have been matched. " << endl;
     exit(EXIT_FAILURE);
   }
-  if(less_than_pagecount_counter != bookVector.size()) {
+  if(less_than_pagecount_counter != bookVector->size()) {
     cerr << "ERROR: The less than function is returning an incorrect amount of valid books. " << endl;
     exit(EXIT_FAILURE);
   }
-  if(more_than_pagecount_counter != bookVector.size()) {
+  if(more_than_pagecount_counter != bookVector->size()) {
     cerr << "ERROR: The more than function is returning an incorrect amount of valid books. " << endl;
     exit(EXIT_FAILURE);
   }

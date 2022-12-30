@@ -11,10 +11,13 @@ using namespace std;
 class Tester {
 		
 	public:
+		Tester();
+		~Tester();
+
 		void launch(int& choice);
 	
 	private:
-		TestBook bookTester;
-		TestLibrary libraryTester;
+		TestBook* bookTester;
+		TestLibrary* libraryTester;
 };
 #endif
