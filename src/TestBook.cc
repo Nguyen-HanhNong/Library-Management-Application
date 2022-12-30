@@ -38,7 +38,6 @@ void TestBook::initFromFile() {
   string line;
   string operatingSystem;
   string fileLocation;
-  int pageCount;
 
   #ifdef _WIN32
     fileLocation = "..\books\tester\test_books.csv";
@@ -88,7 +87,7 @@ void TestBook::printAllBooks() {
     initFromFile();
   }
 
-  for (int i = 0; i < bookVector->size(); ++i) {
+  for (long unsigned int i = 0; i < bookVector->size(); ++i) {
     cout << *bookVector->at(i) << endl;
   }
 
@@ -138,7 +137,7 @@ void TestBook::testAllCriteria() {
     initFromFile();
   }
 
-  for (int i = 0; i < NUM_ATTEMPTS_PER_TEST; ++i) {
+  for (long unsigned int i = 0; i < NUM_ATTEMPTS_PER_TEST; ++i) {
     testTitleCriteria();
     testAuthorCriteria();
     testGenreCriteria();
@@ -168,7 +167,7 @@ void TestBook::testTitleCriteria() const {
   bool matching_title_boolean = false;
   bool non_matching_title_boolean = false;
 
-  for (int i = 0; i < bookVector->size(); ++i) {
+  for (long unsigned int i = 0; i < bookVector->size(); ++i) {
     if(matching_title->matches(*bookVector->at(i))) {
       matching_title_boolean = true;
     }
@@ -201,7 +200,7 @@ void TestBook::testAuthorCriteria() const {
   bool matching_author_boolean = false;
   bool non_matching_author_boolean = false;
 
-  for (int i = 0; i < bookVector->size(); ++i) {
+  for (long unsigned int i = 0; i < bookVector->size(); ++i) {
     if(matching_author->matches(*bookVector->at(i))) {
       matching_author_boolean = true;
     }
@@ -232,7 +231,7 @@ void TestBook::testGenreCriteria() const {
   bool matching_genre_boolean = false;
   bool non_matching_genre_boolean = false;
 
-  for (int i = 0; i < bookVector->size(); ++i) {
+  for (long unsigned int i = 0; i < bookVector->size(); ++i) {
     if(matching_genre->matches(*bookVector->at(i))) {
       matching_genre_boolean = true;
     }
@@ -263,7 +262,7 @@ void TestBook::testSubgenreCriteria() const {
   bool matching_subgenre_boolean = false;
   bool non_matching_subgenre_boolean = false;
 
-  for (int i = 0; i < bookVector->size(); ++i) {
+  for (long unsigned int i = 0; i < bookVector->size(); ++i) {
     if(matching_subgenre->matches(*bookVector->at(i))) {
       matching_subgenre_boolean = true;
     }
@@ -294,7 +293,7 @@ void TestBook::testPublisherCriteria() const {
   bool matching_publisher_boolean = false;
   bool non_matching_publisher_boolean = false;
 
-  for (int i = 0; i < bookVector->size(); ++i) {
+  for (long unsigned int i = 0; i < bookVector->size(); ++i) {
     if(matching_publisher->matches(*bookVector->at(i))) {
       matching_publisher_boolean = true;
     }
@@ -326,10 +325,10 @@ void TestBook::testPageCountCriteria() const {
 
   bool matching_pagecount_boolean = false;
   bool non_matching_pagecount_boolean = false;
-  int less_than_pagecount_counter = 0;
-  int more_than_pagecount_counter = 0;
+  long unsigned int less_than_pagecount_counter = 0;
+  long unsigned int more_than_pagecount_counter = 0;
 
-  for (int i = 0; i < bookVector->size(); ++i) {
+  for (long unsigned int i = 0; i < bookVector->size(); ++i) {
     if(matching_pagecount->matches(*bookVector->at(i))) {
       matching_pagecount_boolean = true;
     }

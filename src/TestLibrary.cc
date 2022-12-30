@@ -36,7 +36,7 @@ void TestLibrary::testAddFunctions() {
 void TestLibrary::testRemoveFunctions() {
   testRemoveBook();
 
-  for (int i = 0; i < MAX_ATTEMPTS_PER_TEST; ++i) {
+  for (long unsigned int i = 0; i < MAX_ATTEMPTS_PER_TEST; ++i) {
     testRemoveBookByCriteria();
     testRemoveBookBySeveralCriteria();
   }
@@ -45,7 +45,7 @@ void TestLibrary::testRemoveFunctions() {
 }
 
 void TestLibrary::testRetrievalFunctions() {
-  for (int i = 0; i < MAX_ATTEMPTS_PER_TEST; ++i) {
+  for (long unsigned int i = 0; i < MAX_ATTEMPTS_PER_TEST; ++i) {
     testGetBookByCriteria();
     testGetBooksByCriteria();
     testGetBookBySeveralCriteria();
@@ -72,7 +72,6 @@ void TestLibrary::initLibraryFromFile(Library& library) {
   string line;
   string operatingSystem;
   string fileLocation;
-  int pageCount;
 
   #ifdef _WIN32
     fileLocation = "..\books\tester\test_books.csv";
@@ -308,7 +307,7 @@ void TestLibrary::testRemoveBook() {
   delete book1;
   initLibraryFromFile(library);
 
-  for(int i = 0; i < 10; ++i) {
+  for(long unsigned int i = 0; i < 10; ++i) {
     Book *removedBook;
     if (library.removeBook(library.getBooks().at(0), &removedBook) == false) {
       cerr << "Error: Book " << "0" << " should be able to be removed from the library." << endl;
@@ -445,7 +444,7 @@ void TestLibrary::testRemoveBookBySeveralCriteria() {
     exit(EXIT_FAILURE);
   }
 
-  for (int i = 0; i < library.getBooks().size(); ++i) {
+  for (int i = 0; i < library.getBookCount(); ++i) {
     if(library.getBooks().at(i) == book) {
       cerr << "Error: Book should not be in the library." << endl;
       exit(EXIT_FAILURE);
@@ -553,7 +552,7 @@ void TestLibrary::testGetBooksByCriteria() {
     exit(EXIT_FAILURE);
   }
 
-  for (int i = 0; i < foundBooks.size(); ++i) {
+  for (long unsigned int i = 0; i < foundBooks.size(); ++i) {
     if(foundBooks.at(i)->getGenre() != testCriteria) {
       cerr << "Error: Book " << foundBooks.at(i)->getTitle() << " should not be in the found books." << endl;
       exit(EXIT_FAILURE);
@@ -640,7 +639,7 @@ void TestLibrary::testGetBooksBySeveralCriteria() {
     exit(EXIT_FAILURE);
   }
 
-  for(int i = 0; i < foundBooks.size(); ++i) {
+  for(long unsigned int i = 0; i < foundBooks.size(); ++i) {
     if(*(foundBooks.at(i)) != *book1 && *(foundBooks.at(i)) != *book2 && *(foundBooks.at(i)) == *book3 && *(foundBooks.at(i)) == *book5 && *(foundBooks.at(i)) == *book6) {
       cerr << "Error: Book found was not one of the books that should have been found." << endl;
       exit(EXIT_FAILURE);
@@ -660,7 +659,7 @@ void TestLibrary::testSortByOrderAdded() {
 
   library.sortBooksByOrderAdded();
 
-  for(int i = 0; i < library.getBooks().size() - 1; ++i) {
+  for(int i = 0; i < library.getBookCount() - 1; ++i) {
     if(library.getBooks().at(i)->getID() > library.getBooks().at(i + 1)->getID()) {
       cerr << "Error: Books are not sorted by order added." << endl;
       exit(EXIT_FAILURE);
@@ -675,7 +674,7 @@ void TestLibrary::testSortByTitle() {
 
   library.sortBooksByTitle();
 
-  for(int i = 0; i < library.getBooks().size() - 1; ++i) {
+  for(int i = 0; i < library.getBookCount() - 1; ++i) {
     if(library.getBooks().at(i)->getTitle() > library.getBooks().at(i + 1)->getTitle()) {
       cerr << "Error: Books are not sorted by title." << endl;
       exit(EXIT_FAILURE);
@@ -690,7 +689,7 @@ void TestLibrary::testSortByAuthor() {
 
   library.sortBooksByAuthor();
 
-  for(int i = 0; i < library.getBooks().size() - 1; ++i) {
+  for(int i = 0; i < library.getBookCount() - 1; ++i) {
     if(library.getBooks().at(i)->getAuthor() > library.getBooks().at(i + 1)->getAuthor()) {
       cerr << "Error: Books are not sorted by author." << endl;
       exit(EXIT_FAILURE);
@@ -705,7 +704,7 @@ void TestLibrary::testSortByGenre() {
 
   library.sortBooksByGenre();
 
-  for(int i = 0; i < library.getBooks().size() - 1; ++i) {
+  for(int i = 0; i < library.getBookCount() - 1; ++i) {
     if(library.getBooks().at(i)->getGenre() > library.getBooks().at(i + 1)->getGenre()) {
       cerr << "Error: Books are not sorted by genre." << endl;
       exit(EXIT_FAILURE);
@@ -720,7 +719,7 @@ void TestLibrary::testSortBySubgenre() {
 
   library.sortBooksBySubgenre();
 
-  for(int i = 0; i < library.getBooks().size() - 1; ++i) {
+  for(int i = 0; i < library.getBookCount() - 1; ++i) {
     if(library.getBooks().at(i)->getSubgenre() > library.getBooks().at(i + 1)->getSubgenre()) {
       cerr << "Error: Books are not sorted by subgenre." << endl;
       exit(EXIT_FAILURE);
@@ -735,7 +734,7 @@ void TestLibrary::testSortByPublisher() {
 
   library.sortBooksByPublisher();
 
-  for(int i = 0; i < library.getBooks().size() - 1; ++i) {
+  for(int i = 0; i < library.getBookCount() - 1; ++i) {
     if(library.getBooks().at(i)->getPublisher() > library.getBooks().at(i + 1)->getPublisher()) {
       cerr << "Error: Books are not sorted by publisher." << endl;
       exit(EXIT_FAILURE);
@@ -750,7 +749,7 @@ void TestLibrary::testSortByPageCount() {
 
   library.sortBooksByPageCount();
 
-  for(int i = 0; i < library.getBooks().size() - 1; ++i) {
+  for(int i = 0; i < library.getBookCount() - 1; ++i) {
     if(library.getBooks().at(i)->getPageCount() > library.getBooks().at(i + 1)->getPageCount()) {
       cerr << "Error: Books are not sorted by pages." << endl;
       exit(EXIT_FAILURE);

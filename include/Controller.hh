@@ -16,6 +16,7 @@ class Controller {
 
     void launchMainMenu();
     void launchTester();
+    void launchScratch();
 
   private: 
     View view;

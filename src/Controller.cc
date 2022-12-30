@@ -47,3 +47,8 @@ void Controller::launchTester()
     tester.launch(choice);
   }
 }
+
+void Controller::launchScratch()
+{
+  // TODO
+}

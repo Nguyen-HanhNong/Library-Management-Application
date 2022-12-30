@@ -76,9 +76,9 @@ class Library {
 		bool matches(const Library &library) const;
 
 	private:
-    vector<Book *> bookVector;
     Address address;
     string name;
+    vector<Book *> bookVector;
     int nextBookID;
 };
 #endif
