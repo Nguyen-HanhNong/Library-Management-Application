@@ -12,6 +12,8 @@ void TestLibrary::launch(){
   testGetterFunctions();
   testAddFunctions();
   testRemoveFunctions();
+  testGetFunctions();
+  testSortFunctions();
 }
 
 void TestLibrary::testGetterFunctions() {
@@ -39,6 +41,28 @@ void TestLibrary::testRemoveFunctions() {
   }
 
   cout << "SUCCESS: All remove functions passed" << endl;
+}
+
+void TestLibrary::testGetFunctions() {
+  for (int i = 0; i < MAX_ATTEMPTS_PER_TEST; ++i) {
+    testGetBookByCriteria();
+    testGetBooksByCriteria();
+    testGetBookBySeveralCriteria();
+    testGetBooksBySeveralCriteria();
+  }
+
+  cout << "SUCCESS: All get books functions passed" << endl;
+}
+
+void TestLibrary::testSortFunctions() {
+  testSortByTitle();
+  testSortByAuthor();
+  testSortByGenre();
+  testSortBySubgenre();
+  testSortByPublisher();
+  testSortByPageCount();
+
+  cout << "SUCCESS: All sorting functions passed" << endl;
 }
 
 void TestLibrary::initLibraryFromFile(Library& library) {
@@ -438,3 +462,300 @@ void TestLibrary::testRemoveBookBySeveralCriteria() {
 
   cout << "Test 9: Remove Book by Several Criteria function: Passed" << endl;
 }
+
+void TestLibrary::testGetBookByCriteria() {
+  initLibraryFromFile(library);
+
+  int randomTitleIndex = getRandomizedIndex();
+  int randomAuthorIndex = getRandomizedIndex();
+  int randomGenreIndex = getRandomizedIndex();
+  int randomSubgenreIndex = getRandomizedIndex();
+  int randomPublisherIndex = getRandomizedIndex();
+  int randomPagesIndex = getRandomizedIndex();
+
+  Book *titleBook = library.getBooks().at(randomTitleIndex);
+  Book *authorBook = library.getBooks().at(randomAuthorIndex);
+  Book *genreBook = library.getBooks().at(randomGenreIndex);
+  Book *subgenreBook = library.getBooks().at(randomSubgenreIndex);
+  Book *publisherBook = library.getBooks().at(randomPublisherIndex);
+  Book *pagesBook = library.getBooks().at(randomPagesIndex);
+
+  Book *foundTitleBook;
+  Book *foundAuthorBook;
+  Book *foundGenreBook;
+  Book *foundSubgenreBook;
+  Book *foundPublisherBook;
+  Book *foundPageCountBook;
+
+  Criteria *titleCriteria = new Title_Criteria(titleBook->getTitle());
+  Criteria *authorCriteria = new Author_Criteria(authorBook->getAuthor());
+  Criteria *genreCriteria = new Genre_Criteria(genreBook->getGenre());
+  Criteria *subgenreCriteria = new Subgenre_Criteria(subgenreBook->getSubgenre());
+  Criteria *publisherCriteria = new Publisher_Criteria(publisherBook->getPublisher());
+  Criteria *pagesCriteria = new Page_Criteria(pagesBook->getPageCount());
+
+  if(library.getBookByCriteria(*titleCriteria, &foundTitleBook) == false) {
+    cerr << "Error: Book " << titleBook->getTitle() << " should be able to be found in the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if(library.getBookByCriteria(*authorCriteria, &foundAuthorBook) == false) {
+    cerr << "Error: Book " << authorBook->getTitle() << " should be able to be found in the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if(library.getBookByCriteria(*genreCriteria, &foundGenreBook) == false) {
+    cerr << "Error: Book " << genreBook->getTitle() << " should be able to be found in the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if(library.getBookByCriteria(*subgenreCriteria, &foundSubgenreBook) == false) {
+    cerr << "Error: Book " << subgenreBook->getTitle() << " should be able to be found in the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if(library.getBookByCriteria(*publisherCriteria, &foundPublisherBook) == false) {
+    cerr << "Error: Book " << publisherBook->getTitle() << " should be able to be found in the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if(library.getBookByCriteria(*pagesCriteria, &foundPageCountBook) == false) {
+    cerr << "Error: Book " << pagesBook->getTitle() << " should be able to be found in the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  delete titleCriteria;
+  delete authorCriteria;
+  delete genreCriteria;
+  delete subgenreCriteria;
+  delete publisherCriteria;
+  delete pagesCriteria;
+
+  cout << "Test 10: Get Book by Criteria function: Passed" << endl;
+}
+
+void TestLibrary::testGetBooksByCriteria() {
+  initLibraryFromFile(library);
+
+  string testCriteria = "tech";
+  vector<Book *> foundBooks;
+
+  Criteria *criteria = new Genre_Criteria(testCriteria);
+
+  if(library.getBooksByCriteria(*criteria, foundBooks) == false) {
+    cerr << "Error: Books with genre " << testCriteria << " should be able to be found in the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if(foundBooks.size() != 5) {
+    cerr << "Error: There should be five books that have the tech genre." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  for (int i = 0; i < foundBooks.size(); ++i) {
+    if(foundBooks.at(i)->getGenre() != testCriteria) {
+      cerr << "Error: Book " << foundBooks.at(i)->getTitle() << " should not be in the found books." << endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  delete criteria;
+
+  cout << "Test 11: Get Books by Criteria function: Passed" << endl;
+}
+
+void TestLibrary::testGetBookBySeveralCriteria() {
+  initLibraryFromFile(library);
+
+  int randomBookIndex = getRandomizedIndex();
+  Book *book = library.getBooks().at(randomBookIndex);
+  Book *foundBook;
+
+  Criteria *titleCriteria = new Title_Criteria(book->getTitle());
+  Criteria *authorCriteria = new Author_Criteria(book->getAuthor());
+  Criteria *genreCriteria = new Genre_Criteria(book->getGenre());
+  Criteria *subgenreCriteria = new Subgenre_Criteria(book->getSubgenre());
+  Criteria *publisherCriteria = new Publisher_Criteria(book->getPublisher());
+  Criteria *pagesCriteria = new Page_Criteria(book->getPageCount());
+
+  vector<Criteria *> criteriaVector;
+
+  criteriaVector.push_back(titleCriteria);
+  criteriaVector.push_back(authorCriteria);
+  criteriaVector.push_back(genreCriteria);
+  criteriaVector.push_back(subgenreCriteria);
+  criteriaVector.push_back(publisherCriteria);
+  criteriaVector.push_back(pagesCriteria);
+
+  if(library.getBookBySeveralCriteria(criteriaVector, &foundBook) == false) {
+    cerr << "Error: Book " << book->getTitle() << " should be able to be found in the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+  if(*foundBook != *book) {
+    cerr << "Error: Original/Model book should be the same as the found book." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  delete titleCriteria;
+  delete authorCriteria;
+  delete genreCriteria;
+  delete subgenreCriteria;
+  delete publisherCriteria;
+  delete pagesCriteria;
+
+  cout << "Test 12: Get Book by Several Criteria function: Passed" << endl;
+}
+
+void TestLibrary::testGetBooksBySeveralCriteria() {
+  Library testLibrary = Library();
+
+  Book *book1 = new Book("The Hobbit", "J.R.R. Tolkien", "Fantasy", "Epic", "Houghton Mifflin Harcourt", 295);
+  Book *book2 = new Book("The Lord of the Rings", "J.R.R. Tolkien", "Fantasy", "Epic", "Houghton Mifflin Harcourt", 1216);
+  Book *book3 = new Book("The Silmarillion", "J.R.R. Tolkien", "Fantasy", "Epic", "Houghton Mifflin Harcourt", 432);
+  Book *book5 = new Book("1984", "George Orwell", "Dystopian", "Political", "Houghton Mifflin Harcourt", 328);
+  Book *book6 = new Book("Animal Farm", "George Orwell", "Dystopian", "Political", "Houghton Mifflin Harcourt", 112);
+
+  testLibrary.addBook(book1);
+  testLibrary.addBook(book2);
+  testLibrary.addBook(book3);
+  testLibrary.addBook(book5);
+  testLibrary.addBook(book6);
+
+  Criteria* genreCriteria = new Genre_Criteria("Fantasy");
+  Criteria* authorCriteria = new Author_Criteria("J.R.R. Tolkien");
+  Criteria* subgenreCriteria = new Subgenre_Criteria("Epic");
+  Criteria *publisherCriteria = new Publisher_Criteria("Houghton Mifflin Harcourt");
+
+  vector <Criteria *> criteriaVector;
+  criteriaVector.push_back(genreCriteria);
+  criteriaVector.push_back(authorCriteria);
+  criteriaVector.push_back(subgenreCriteria);
+  criteriaVector.push_back(publisherCriteria);
+
+  vector<Book *> foundBooks;
+
+  if(testLibrary.getBooksBySeveralCriteria(criteriaVector, foundBooks) == false) {
+    cerr << "Error: Books with the fantasy genre, J.R.R. Tolkien as author, Epic subgenre and Houghton Mifflin Harcourt as publisher" << " should be able to be found in the library." << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  for(int i = 0; i < foundBooks.size(); ++i) {
+    if(*(foundBooks.at(i)) != *book1 && *(foundBooks.at(i)) != *book2 && *(foundBooks.at(i)) == *book3 && *(foundBooks.at(i)) == *book5 && *(foundBooks.at(i)) == *book6) {
+      cerr << "Error: Book found was not one of the books that should have been found." << endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  delete genreCriteria;
+  delete authorCriteria;
+  delete subgenreCriteria;
+  delete publisherCriteria;
+
+  cout << "Test 13: Get Books by Several Criteria function: Passed" << endl;
+}
+
+void TestLibrary::testSortByOrderAdded() {
+  initLibraryFromFile(library);
+
+  library.sortBooksByOrderAdded();
+
+  for(int i = 0; i < library.getBooks().size() - 1; ++i) {
+    if(library.getBooks().at(i)->getID() > library.getBooks().at(i + 1)->getID()) {
+      cerr << "Error: Books are not sorted by order added." << endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  cout << "Test 14: Sort Books by Order Added function: Passed" << endl;
+}
+
+void TestLibrary::testSortByTitle() {
+  initLibraryFromFile(library);
+
+  library.sortBooksByTitle();
+
+  for(int i = 0; i < library.getBooks().size() - 1; ++i) {
+    if(library.getBooks().at(i)->getTitle() > library.getBooks().at(i + 1)->getTitle()) {
+      cerr << "Error: Books are not sorted by title." << endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  cout << "Test 15: Sort Books by Title function: Passed" << endl;
+}
+
+void TestLibrary::testSortByAuthor() {
+  initLibraryFromFile(library);
+
+  library.sortBooksByAuthor();
+
+  for(int i = 0; i < library.getBooks().size() - 1; ++i) {
+    if(library.getBooks().at(i)->getAuthor() > library.getBooks().at(i + 1)->getAuthor()) {
+      cerr << "Error: Books are not sorted by author." << endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  cout << "Test 16: Sort Books by Author function: Passed" << endl;
+}
+
+void TestLibrary::testSortByGenre() {
+  initLibraryFromFile(library);
+
+  library.sortBooksByGenre();
+
+  for(int i = 0; i < library.getBooks().size() - 1; ++i) {
+    if(library.getBooks().at(i)->getGenre() > library.getBooks().at(i + 1)->getGenre()) {
+      cerr << "Error: Books are not sorted by genre." << endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  cout << "Test 17: Sort Books by Genre function: Passed" << endl;
+}
+
+void TestLibrary::testSortBySubgenre() {
+  initLibraryFromFile(library);
+
+  library.sortBooksBySubgenre();
+
+  for(int i = 0; i < library.getBooks().size() - 1; ++i) {
+    if(library.getBooks().at(i)->getSubgenre() > library.getBooks().at(i + 1)->getSubgenre()) {
+      cerr << "Error: Books are not sorted by subgenre." << endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  cout << "Test 18: Sort Books by Subgenre function: Passed" << endl;
+}
+
+void TestLibrary::testSortByPublisher() {
+  initLibraryFromFile(library);
+
+  library.sortBooksByPublisher();
+
+  for(int i = 0; i < library.getBooks().size() - 1; ++i) {
+    if(library.getBooks().at(i)->getPublisher() > library.getBooks().at(i + 1)->getPublisher()) {
+      cerr << "Error: Books are not sorted by publisher." << endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  cout << "Test 19: Sort Books by Publisher function: Passed" << endl;
+}
+
+void TestLibrary::testSortByPageCount() {
+  initLibraryFromFile(library);
+
+  library.sortBooksByPageCount();
+
+  for(int i = 0; i < library.getBooks().size() - 1; ++i) {
+    if(library.getBooks().at(i)->getPageCount() > library.getBooks().at(i + 1)->getPageCount()) {
+      cerr << "Error: Books are not sorted by pages." << endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  cout << "Test 20: Sort Books by Pages function: Passed" << endl;
+}
+

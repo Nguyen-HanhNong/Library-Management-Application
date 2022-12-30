@@ -10,7 +10,7 @@
 
 #include "Library.hh"
 
-#define MAX_ATTEMPTS_PER_TEST 5
+#define MAX_ATTEMPTS_PER_TEST 25
 
 using namespace std;
 
@@ -44,6 +44,27 @@ class TestLibrary {
 		void testRemoveBook();
 		void testRemoveBookByCriteria();
 		void testRemoveBookBySeveralCriteria();
+
+		/* Tester get functions */
+		void testGetFunctions();
+
+		void testGetBookByCriteria();
+		void testGetBooksByCriteria();
+		void testGetBookBySeveralCriteria();
+		void testGetBooksBySeveralCriteria();
+
+
+		/* Test sorting functions */
+		void testSortFunctions();
+
+		void testSortByOrderAdded();
+		void testSortByTitle();
+		void testSortByAuthor();
+		void testSortByGenre();
+		void testSortBySubgenre();
+		void testSortByPublisher();
+		void testSortByPageCount();
+
 
 		Library library;
 		vector<Criteria> criteriaVector;

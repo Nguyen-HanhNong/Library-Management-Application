@@ -13,7 +13,7 @@
 
 using namespace std;
 
-#define NUM_ATTEMPTS_PER_TEST 5
+#define NUM_ATTEMPTS_PER_TEST 25
 
 class TestBook {
 	public:

@@ -132,6 +132,78 @@ void Library::defaultPrint(ostream &os) const {
   }
 }
 
+bool Library::getBookByCriteria(const Criteria &criteria, Book **book) const {
+  for(int i = 0; i < bookVector.size(); ++i) {
+    if(criteria.matches(*bookVector[i])) {
+      *book = bookVector[i];
+      return true;
+    }
+  }
+
+  *book = NULL;
+  cout << "Error: Cannot find book as book does not exist in the library." << endl;
+  return false;
+}
+
+bool Library::getBookBySeveralCriteria(const vector<Criteria *> &criteria, Book **book) const {
+  for(int i = 0; i < bookVector.size(); ++i) {
+    bool match = true;
+    for(int j = 0; j < criteria.size(); j++) {
+      if(!criteria[j]->matches(*bookVector[i])) {
+        match = false;
+        break;
+      }
+    }
+
+    if(match) {
+      *book = bookVector[i];
+      return true;
+    }
+  }
+
+  *book = NULL;
+  cout << "Error: Cannot find book as book does not exist in the library." << endl;
+  return false;
+}
+
+bool Library::getBooksByCriteria(const Criteria &criteria, vector<Book *> &books) const {
+  for(int i = 0; i < bookVector.size(); ++i) {
+    if(criteria.matches(*bookVector[i])) {
+      books.push_back(bookVector[i]);
+    }
+  }
+
+  if(books.size() == 0) {
+    cout << "Error: Cannot find books as books do not exist in the library." << endl;
+    return false;
+  }
+
+  return true;
+}
+
+bool Library::getBooksBySeveralCriteria(const vector<Criteria *> &criteria, vector<Book *> &books) const {
+  for(int i = 0; i < bookVector.size(); ++i) {
+    bool match = true;
+    for(int j = 0; j < criteria.size(); j++) {
+      if(!criteria[j]->matches(*bookVector[i])) {
+        match = false;
+        break;
+      }
+    }
+
+    if(match) {
+      books.push_back(bookVector[i]);
+    }
+  }
+
+  if(books.size() == 0) {
+    cout << "Error: Cannot find books as books do not exist in the library." << endl;
+    return false;
+  }
+
+  return true;
+}
+
 void Library::sortBooksByOrderAdded() {
   sort(bookVector.begin(), bookVector.end(), Book::compareOrderAdded);
 }
@@ -196,3 +268,4 @@ void Library::operator=(const Library &library) {
     bookVector.push_back(new Book(*library.bookVector[i]));
   }
 }
+
