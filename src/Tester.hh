@@ -11,7 +11,7 @@ using namespace std;
 class Tester {
 		
 	public:
-		void launch();
+		void launch(int& choice);
 	
 	private:
 		TestBook bookTester;

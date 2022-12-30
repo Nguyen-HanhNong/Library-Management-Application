@@ -21,14 +21,13 @@ class TestBook {
 		~TestBook();
 		void launch();
 
-	private:
 		void initFromFile();
 
-		void printAllBooks() const;
+		void printAllBooks();
 		void compareBooks() const;
 
 		/* Test all criteria for the books */
-		void testAllCriteria() const;
+		void testAllCriteria();
 		
 		void testTitleCriteria() const;
 		void testAuthorCriteria() const;
@@ -38,7 +37,7 @@ class TestBook {
 		void testPageCountCriteria() const;
 
 		const int getRandomizedIndex() const;
-
+	private:
 		vector<Book*> bookVector;
 
 };

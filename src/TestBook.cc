@@ -11,13 +11,14 @@ TestBook::~TestBook() {
 }
 
 void TestBook::launch() {
-  initFromFile();
   printAllBooks();
   compareBooks();
   testAllCriteria();
 }
 
 void TestBook::initFromFile() {
+  bookVector.clear();
+
   string line;
   string operatingSystem;
   string fileLocation;
@@ -66,7 +67,9 @@ void TestBook::initFromFile() {
   file.close();
 }
 
-void TestBook::printAllBooks() const {
+void TestBook::printAllBooks() {
+  initFromFile();
+
   for (int i = 0; i < bookVector.size(); ++i) {
     cout << *bookVector.at(i) << endl;
   }
@@ -107,7 +110,8 @@ void TestBook::compareBooks() const {
   cout << "Test succesfully passed the matching functionality of the books!" << endl;
 }
 
-void TestBook::testAllCriteria() const {
+void TestBook::testAllCriteria() {
+  initFromFile();
   for (int i = 0; i < NUM_ATTEMPTS_PER_TEST; ++i) {
     testTitleCriteria();
     testAuthorCriteria();

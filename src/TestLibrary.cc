@@ -12,7 +12,7 @@ void TestLibrary::launch(){
   testGetterFunctions();
   testAddFunctions();
   testRemoveFunctions();
-  testGetFunctions();
+  testRetrievalFunctions();
   testSortFunctions();
 }
 
@@ -43,7 +43,7 @@ void TestLibrary::testRemoveFunctions() {
   cout << "SUCCESS: All remove functions passed" << endl;
 }
 
-void TestLibrary::testGetFunctions() {
+void TestLibrary::testRetrievalFunctions() {
   for (int i = 0; i < MAX_ATTEMPTS_PER_TEST; ++i) {
     testGetBookByCriteria();
     testGetBooksByCriteria();

@@ -1,8 +1,8 @@
-#include "Tester.hh"
+#include "Controller.hh"
 
 int main()
 {
-  Tester tester;
-  tester.launch();
+  Controller controller;
+  controller.launchMainMenu();
   return 0;
 }

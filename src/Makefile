@@ -1,4 +1,4 @@
-main_classes = Criteria.o Book.o Address.o Library.o 
+main_classes = Criteria.o Book.o Address.o Library.o Controller.o View.o
 tester_classes = TestBook.o TestLibrary.o Tester.o
 main_file = main.o 
 
@@ -11,6 +11,12 @@ LibraryManagementApplication: $(main_classes) $(tester_classes) $(main_file)
 
 main.o: main.cc 
 	g++ -c main.cc
+
+View.o: View.cc View.hh
+	g++ -c View.cc
+
+Controller.o: Controller.cc Controller.hh
+	g++ -c Controller.cc
 
 Tester.o: Tester.cc Tester.hh
 	g++ -c Tester.cc
