@@ -5,6 +5,9 @@
 #include <string>
 #include <limits>
 
+#include "Library.hh"
+#include "Algorithms.hh"
+
 using namespace std;
 
 class View {
@@ -15,5 +18,9 @@ class View {
     void mainMenu(int& choice) const;
     
     void testerMainMenu(int& choice) const;
+
+    void starterLibraryMenu(int& choice) const;
+
+    void createLibraryMenu(Library& library) const;
 };
 #endif

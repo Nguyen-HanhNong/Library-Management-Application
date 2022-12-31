@@ -48,7 +48,6 @@ void Controller::launchTester()
   }
 }
 
-void Controller::launchScratch()
-{
-  // TODO
+void Controller::launchScratch() {
+  
 }
