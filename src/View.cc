@@ -38,10 +38,10 @@ void View::mainMenu(int& choice) const {
 }
 
 void View::testerMainMenu(int &choice) const {
-  cout << "You have entered the tester functionality of the application. Choose which test you want to run: " << endl;
+  cout << "You have entered the tester functionality of the application. Choose which test you want to run: " << endl << endl;
 
   for (;;) {
-    cout << "Please select an option from the following:" << endl;
+    cout << "Please select an option from the following:" << endl << endl;
 
     cout << "1. Print a list of all books." << endl;
     cout << "2. Compare two books." << endl;
@@ -78,7 +78,7 @@ void View::testerMainMenu(int &choice) const {
 }
 
 void View::starterLibraryMenu(int &choice) const {
-  cout << "You have selected to run the program from scratch." << endl;
+  cout << "You have selected to run the program from scratch." << endl << endl;
 
   for (;;) {
     cout << "Please select an option from the following:" << endl;
