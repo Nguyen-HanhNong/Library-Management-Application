@@ -13,6 +13,18 @@ This application was written in C++ for several reasons:
 - C++ is a widely-used language, which means it is well-documented and has a large number of resources available online. This can make it easier to learn and use.
 
 ## Demo of the application running!
-[library-management-application-demo](https://user-images.githubusercontent.com/81977350/210184873-fd8819c4-8648-45e7-8cf6-166384801094.gif)
+![](https://user-images.githubusercontent.com/81977350/210184873-fd8819c4-8648-45e7-8cf6-166384801094.gif)
 
 ## Instructions to compile and run the application:
+
+## Linux
+1. Download the application or clone the repository
+2. Make sure you have a C++ compiler like gcc installed on your OS
+3. Compile the files in the program by running the MakeFile in the root directory with the `make` command in a terminal.
+4. Afterwards, move the terminal to the bin directory and run the executable with the `./LibraryManagementApplication` command
+5. Once the program launches, follow the onscreen prompts.
+6. Once the program finishes, you can clean up the executables and object files with the `make clean` command in a terminal in the root directory.
+
+## Potential Improvements and Advancements:
+- Finish the functionality to save libraries into text files so they can be saved.
+- Add the ability to save other commodities that libraries carry like audiobooks.
