@@ -74,11 +74,11 @@ void TestLibrary::initLibraryFromFile(Library& library) {
   string fileLocation;
 
   #ifdef _WIN32
-    fileLocation = "..\books\tester\test_books.csv";
+    fileLocation = "..\save_files\tester\test_books.csv";
   #elif __linux__
-    fileLocation = "../books/tester/test_books.csv";
+    fileLocation = "../save_files/tester/test_books.csv";
   #elif __unix__
-    fileLocation = "../books/tester/test_books.csv";
+    fileLocation = "../save_files/tester/test_books.csv";
   #else
     cout << "Unidentified OS. This program does not currently handle this OS. The program will now exit";
     exit(EXIT_FAILURE);

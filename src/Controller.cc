@@ -40,7 +40,7 @@ void Controller::launchTester()
     int choice = -1;
     view.testerMainMenu(choice);
 
-    if (choice == 10) {
+    if (choice == 15) {
       break;
     }
 

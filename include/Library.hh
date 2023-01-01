@@ -42,6 +42,10 @@ class Library {
     const int getBookCount() const;
     const string& getName() const;
     const Address& getAddress() const;
+    
+    //setter functions 
+    void setName(const string& name);
+    void setAddress(const Address& address);
 
     //add functions
     bool addBook(const string& title, const string& author, const string& genre, const string& subgenre, const string& publisher, int pageCount);
@@ -56,6 +60,7 @@ class Library {
 
     //print formatting
 		void defaultPrint(ostream &os) const;
+    void printOnlyBooks(ostream &os) const;
 
     //get book functions
     bool getBookByCriteria(const Criteria &criteria, Book **book) const;

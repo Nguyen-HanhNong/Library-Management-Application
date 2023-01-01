@@ -51,8 +51,13 @@ void View::testerMainMenu(int &choice) const {
     cout << "6. Test all remove functions of a Library." << endl;
     cout << "7. Test all book retrieval functions of a Library." << endl;
     cout << "8. Test all sorting functions of a Library." << endl;
-    cout << "9. Run all tests rigorously." << endl;
-    cout << "10. Exit the testing part of the program." << endl;
+    cout << "9. Test add functionality of a LibraryManager." << endl;
+    cout << "10. Test remove functionality of a LibraryManager." << endl;
+    cout << "11. Test finding library functionality of a LibraryManager." << endl;
+    cout << "12. Test printing functionality of a LibraryManager." << endl;
+    cout << "13. Test the booking moving functionality of a LibraryManager" << endl;
+    cout << "14. Run all tests for the application." << endl;
+    cout << "15. Exit the tester." << endl;
 
     cin >> choice;
 
@@ -63,7 +68,7 @@ void View::testerMainMenu(int &choice) const {
       continue;
     }
 
-    if (choice < 1 || choice > 10) {
+    if (choice < 1 || choice > 15) {
       std::cerr << "Sorry, the option selected is out of range. Try again." << std::endl;
       continue;
     }
@@ -108,5 +113,14 @@ void View::starterLibraryMenu(int &choice) const {
 }
 
 void View::createLibraryMenu(Library& library) const {
+  cout << "To create a library, we will need to know a couple of things: " << endl;
+
+  string name;
+
+  cout << "What is the name of the library? " << endl;
+  cin >> name;
+
+  Algorithms::trim(name);
+
   
 }

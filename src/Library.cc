@@ -36,6 +36,14 @@ const Address& Library::getAddress() const {
   return this->address;
 }
 
+void Library::setName(const string& name) {
+  this->name = name;
+}
+
+void Library::setAddress(const Address& address) {
+  this->address = address;
+}
+
 bool Library::addBook(const string& title, const string& author, const string& genre, const string& subgenre, const string& publisher, int pageCount) {
   Book *book = new Book(title, author, genre, subgenre, publisher, pageCount, nextBookID);
 
@@ -127,6 +135,12 @@ void Library::emptyLibrary() {
 void Library::defaultPrint(ostream &os) const {
   os << "The name of the library is: " << name << " and is at the following address: " << address << endl;
   os << "The books in the library: " << endl;
+  for(long unsigned int i = 0; i < bookVector.size(); ++i) {
+    os << *bookVector[i] << endl;
+  }
+}
+
+void Library::printOnlyBooks(ostream &os) const {
   for(long unsigned int i = 0; i < bookVector.size(); ++i) {
     os << *bookVector[i] << endl;
   }
