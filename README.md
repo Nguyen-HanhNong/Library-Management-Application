@@ -2,14 +2,14 @@
 
 ## What is this application?
 
-This application allows for management of libraries and books and provides functionality for managing the libraries including updating addresses of libraries, sorting of books within the libraries, adding and removing of books and moving books between libraries.
+This application allows for the management of libraries and books and provides functionality for managing the libraries including updating the addresses of libraries, sorting books within the libraries, adding and removing books, and moving books between libraries.
 
 ## Choice of programming language
 
 This application was written in C++ for several reasons:
 - C++ is a high-performance language, which means it can handle large amounts of data efficiently. This is important for an application that is managing a large number of books and libraries.
-- C++ has a large standard library and a large community of users, which means there are lots of premade functions with high reliability that can be used immediatley such as the sort function and vector class.
-- C++ is a statically-typed language, which means that the type of a variable must be specified at compile time. This can help catch errors and bugs early on in the development process, which is helpful for the development of collection classes which have a high amount of operator overloading.
+- C++ has a large standard library and a large community of users, which means there are lots of premade functions with high reliability that can be used immediately such as the sort function and vector class.
+- C++ is a statically-typed language, which means that the type of a variable must be specified at compile time. This can help catch errors and bugs early on in the development process, which is helpful for the development of collection classes that have a high amount of operator overloading.
 - C++ is a widely-used language, which means it is well-documented and has a large number of resources available online. This can make it easier to learn and use.
 
 ## Demo of the application running!
@@ -19,8 +19,8 @@ This application was written in C++ for several reasons:
 
 ## Linux
 1. Download the application or clone the repository
-2. Make sure you have a C++ compiler like gcc installed on your OS
-3. Compile the files in the program by running the MakeFile in the root directory with the `make` command in a terminal.
+2. Make sure you have a C++ compiler like **gcc** installed on your OS
+3. Compile the files in the program by running the Makefile in the root directory with the `make` command in a terminal.
 4. Afterwards, move the terminal to the bin directory and run the executable with the `./LibraryManagementApplication` command
 5. Once the program launches, follow the onscreen prompts.
 6. Once the program finishes, you can clean up the executables and object files with the `make clean` command in a terminal in the root directory.
