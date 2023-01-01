@@ -62,8 +62,8 @@ void Tester::launch(int& choice) {
       libraryManagerTester->testMoveBook();
       break;
     case 14:
-      bookTester->launch();
-      libraryTester->launch();
+      bookTester->launchAllTests();
+      libraryTester->launchAllTests();
       libraryManagerTester->launchAllTests();
       break;
     case 15:

@@ -1,11 +1,11 @@
 #include "Controller.hh"
 
-Controller::Controller()
+Controller::Controller(): view(), tester(), libraryManager(new LibraryManager())
 {
 }
 
-Controller::~Controller()
-{
+Controller::~Controller() {
+  delete libraryManager;
 }
 
 void Controller::launchMainMenu()
@@ -22,6 +22,7 @@ void Controller::launchMainMenu()
     switch (choice) {
       case 1:
         cout << "You have selected to run the program from scratch." << endl;
+        launchScratch();
         break;
       case 2:
         cout << "You have selected to load the program from a file." << endl;
@@ -49,5 +50,11 @@ void Controller::launchTester()
 }
 
 void Controller::launchScratch() {
+  Library* newLibrary = new Library();
+  view.createLibraryMenu(*newLibrary);
+  libraryManager->addLibrary(newLibrary);
+}
+
+void Controller::launchLibraryMenu() {
   
 }

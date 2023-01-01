@@ -1,4 +1,4 @@
-/* TestBook.hh */
+/* TestBook.cc */
 /* Author: Nguyen-Hanh Nong */
 /* Revision: Revision 1.0 */
 /* */
@@ -26,13 +26,12 @@ TestBook::~TestBook() {
 }
 
 /* This function runs all the functions in the TestBook class */
-void TestBook::launch() {
+void TestBook::launchAllTests() {
   printAllBooks(); // Printing all the books in the test file
   compareBooks(); // Comparing different books
   testAllCriteria(); //Testing all the criteria with various books
 
-  cout << "BOOK TESTING: All tests passed!" << endl
-       << endl;
+  cout << "SUCCESS: All Book tests passed" << endl << endl;
 }
 
 /* This function deletes all the books in the bookVector vector */

@@ -113,14 +113,26 @@ void View::starterLibraryMenu(int &choice) const {
 }
 
 void View::createLibraryMenu(Library& library) const {
+  string name;
+  string streetNumber;
+  string streetName;
+  string cityName;
+  string provinceName;
+  string postalCode;
+
   cout << "To create a library, we will need to know a couple of things: " << endl;
 
-  string name;
+  Algorithms::sanitized_input("What is the name of the library? ", name);
+  Algorithms::sanitized_input("What is the street number of the library? ", streetNumber);
+  Algorithms::sanitized_input("What is the street name of the library? ", streetName);
+  Algorithms::sanitized_input("What is the city name of the library? ", cityName);
+  Algorithms::sanitized_input("What is the province name/state of the library? ", provinceName);
+  Algorithms::sanitized_input("What is the postal code of the library? ", postalCode);
 
-  cout << "What is the name of the library? " << endl;
-  cin >> name;
+  Address address = Address(streetNumber, streetName, cityName, provinceName, postalCode);
 
-  Algorithms::trim(name);
+  library.setName(name);
+  library.setAddress(address);
 
-  
+  cout << "The library has been successfully created!" << endl;
 }

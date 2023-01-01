@@ -6,6 +6,7 @@
 
 #include "View.hh"
 #include "Tester.hh"
+#include "LibraryManager.hh"
 
 using namespace std;
 
@@ -18,8 +19,11 @@ class Controller {
     void launchTester();
     void launchScratch();
 
+    void launchLibraryMenu();
+
   private: 
     View view;
     Tester tester;
+    LibraryManager* libraryManager;
 };
 #endif

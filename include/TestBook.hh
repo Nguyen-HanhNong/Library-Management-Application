@@ -30,7 +30,7 @@ class TestBook {
 		TestBook();
 		~TestBook();
 
-		void launch(); //Launches the all the tests
+		void launchAllTests(); //Launches the all the tests
 
 		void initFromFile(); //Initializes the book vector from a file
 

@@ -22,5 +22,7 @@ class View {
     void starterLibraryMenu(int& choice) const;
 
     void createLibraryMenu(Library& library) const;
+
+    void mainLibraryMenu(int& choice) const;
 };
 #endif

@@ -29,7 +29,7 @@ class TestLibrary {
 		TestLibrary();
 		~TestLibrary();
 
-		void launch(); //Launches the all the tests
+		void launchAllTests(); //Launches the all the tests
 
 		void initLibraryFromFile(Library& library); //Initializes the library from a file
 		const int getRandomizedIndex() const; //Returns a randomized index for the books stored in the library
@@ -45,7 +45,7 @@ class TestLibrary {
 		/* Testing add functions */
 		void testAddFunctions(); //Test the add functions and matchibngBooks() function in the Library class
 
-		void testMatchingBooks(); //Tests the matchingBooks() function
+		void testMatchingBooks(); //Tests the matching books behaviour in the addBooks function
 		void testAddBooks(); //Tests the addBooks() function
 
 		/* Testing remove functions */
